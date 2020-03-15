@@ -96,16 +96,10 @@ class Sessao{
 
     /**
      * @param horario the horario to set
+     * TODO: Verificar os horários já ocupados, no caso de adicionar novos filmes em Cartaz
      */
     public void setHorario(int horario) {
         this.horario = horario;
-    }
-
-    /**
-     * @return the preco
-     */
-    public float getPreco() {
-        return preco;
     }
 
     /**
@@ -128,86 +122,86 @@ class Sessao{
         }
     }
 
-    public float setPreco() {
+    public float getPreco() {
 
         switch(this.dia){
             // 1: Domingo
             case 1:
-                if(this.getDimensao() == "3D")
+                if(this.dimensao == "3D")
                 {
-                    preco = 30.00f;
+                    this.preco = 30.00f;
                     break;
                 }
                 else
                 {
-                    preco = 26.000f;
+                    this.preco = 26.00f;
                     break;
                 }
             // 2: Segunda-feira
             case 2:
-                if(this.getDimensao() == "3D")
+                if(this.dimensao == "3D")
                 {
-                    preco = 20.00f;
+                    this.preco = 20.00f;
                     break;
                 }
                 else
                 {
-                    preco = 18.00f;
+                    this.preco = 18.00f;
                     break;
                 }
             // 3: Terça-feira
             case 3:
-                if(this.getDimensao() == "3D")
+                if(this.dimensao == "3D")
                 {
-                    preco = 22.00f;
+                    this.preco = 22.00f;
                     break;
                 }
                 else
                 {
-                    preco = 20.00f;
+                    this.preco = 20.00f;
                     break;
                 }
             // 4: Quarta-feira
             case 4:
-                if(this.getDimensao() == "3D")
+                if(this.dimensao == "3D")
                 {
-                    preco = 20.00f;
+                    this.preco = 20.00f;
                     break;
                 }
                 else
                 {
-                    preco = 18.00f;
+                    this.preco = 18.00f;
                     break;
                 }
             // 5: Quinta-feira
             case 5:
-                if(this.getDimensao() == "3D")
+                if(this.dimensao == "3D")
                 {
-                    preco = 22.00f;
+                    this.preco = 22.00f;
                     break;
                 }
                 else
                 {
-                    preco = 20.00f;
+                    this.preco = 20.00f;
                     break;
                 }
             // 6: Sexta-feira
             case 6:
-                if(this.getDimensao() == "3D")
+                if(this.dimensao == "3D")
                 {
-                    preco = 22.00f;
+                    this.preco = 22.00f;
                     break;
                 }
                 else
                 {
-                    preco = 20.00f;
+                    this.preco = 20.00f;
                     break;
                 }
             // 7: Sábado
             case 7:
-                if(this.getDimensao() == "3D")
+                if(this.dimensao == "3D")
                 {
-                    preco = 30.00f;
+                    this.preco = 30.00f;
                     break;
                 }
                 else
@@ -216,7 +210,6 @@ class Sessao{
                     break;
                 }
         }
-
         return preco;
     }
 
@@ -227,8 +220,14 @@ class Sessao{
                         + "\nDimensão: " + this.getDimensao() 
                         + "\nDia: " + this.getDia()
                         + "\nHorário: " + this.getHorario()
-                        + "\nPreço: R$ " + this.setPreco()
-                        + "\nAssentos Disponíveis: " + this.getAssentosDisponiveis() );
+                        + "\nPreço: R$ " + this.getPreco()
+                        + "\nSala: " + this.sala.getNumeroSala() );
+                        // + "\nAssentos Disponíveis: " + this.getAssentosDisponiveis() );
+    }
+
+    public Filme getSessao(Filme filme)
+    {
+        return filme;
     }
     public static void main(String[] args) {
         

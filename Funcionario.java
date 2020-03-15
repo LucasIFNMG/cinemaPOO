@@ -3,10 +3,9 @@ class Funcionario
     private String nome;
     private int id;
     private String cpf;
-    private int nivelAcesso;    //0: Apenas Vendas  1(Gerente): Editar Sessões
-    private int totalVendas;
-    private static int totalVendasCinema;
-
+    private int nivelAcesso;    //0: Apenas Vendas.  1(Gerente): Editar Sessões
+    private int totalVendas = 0;
+    private static int totalVendasCinema = 0;
 
     public Funcionario(String nome, int id, String cpf)
     {
@@ -84,6 +83,20 @@ class Funcionario
      */
     public void setTotalVendas(int totalVendas) {
         this.totalVendas = totalVendas;
+    }
+
+    /**
+     * @return the totalVendasCinema
+     */
+    public static int getTotalVendasCinema() {
+        return Funcionario.totalVendasCinema;
+    }
+
+    /**
+     * @param totalVendasCinema the totalVendasCinema to set
+     */
+    public static void setTotalVendasCinema(int totalVendasCinema) {
+        Funcionario.totalVendasCinema = totalVendasCinema;
     }
 
     public static void main(String[] args) {

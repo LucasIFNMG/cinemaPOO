@@ -1,26 +1,26 @@
 class Cartaz
 {
-    Sessao sessao;
+    Filme filme;
     Data dataInicio;
     Data dataTermino;
 
-    public Cartaz(Sessao sessao)
+    public Cartaz(Filme filme)
     {
-        this.sessao = sessao;
+        this.filme = filme;
     }
 
     /**
-     * @return the sessao
+     * @return the filme
      */
-    public Sessao getsessao() {
-        return sessao;
+    public Filme getfilme() {
+        return filme;
     }
 
     /**
-     * @param sessao the sessao to set
+     * @param filme the filme to set
      */
-    public void setsessao(Sessao sessao) {
-        this.sessao = sessao;
+    public void setfilme(Filme filme) {
+        this.filme = filme;
     }
 
     /**
@@ -54,7 +54,5 @@ class Cartaz
     public static void main(String[] args) {
         
     }
-
-
 
 }

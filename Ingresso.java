@@ -6,6 +6,7 @@ class Ingresso
     private Funcionario funcionario;
     private Cliente cliente;
     private float preco;
+    private String codigoRetirada;
 
     public Ingresso(Sessao sessao, boolean isMeiaEntrada, Funcionario funcionario)
     {
@@ -13,6 +14,7 @@ class Ingresso
         this.isMeiaEntrada = isMeiaEntrada;
         this.funcionario = funcionario;
         this.preco = sessao.getPreco();
+        // this.cliente = cliente;
     }
 
     /**
@@ -74,17 +76,76 @@ class Ingresso
         return preco;
     }
 
+    /**
+     * @return the codigoRetirada
+     */
+    public String getCodigoRetirada() {
+        return codigoRetirada;
+    }
+
+    /**
+     * @param codigoRetirada the codigoRetirada to set
+     */
+    public void setCodigoRetirada(String codigoRetirada) {
+        this.codigoRetirada = codigoRetirada;
+    }
+
     public boolean vender(int quantidade)
     {
         if(this.sessao.reservarAssentos(quantidade) == true)
         {
             this.funcionario.setTotalVendas(this.funcionario.getTotalVendas()+quantidade); 
+            Funcionario.setTotalVendasCinema(Funcionario.getTotalVendasCinema() + quantidade);
             return true;
         }
         else
         {
             return false;
         }
+    }
+    /*
+    public boolean reservarIngresso(Cliente cliente, int quantidade)
+    {
+        if(this.sessao.reservarAssentos(quantidade) == true)
+        {
+
+            this.setCodigoRetirada(cliente.getDocumento());
+            // TODO: Adicionar a uma Lista que guarde as Reservas;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    */
+
+    public boolean reservarIngresso(Cliente cliente, int quantidade)
+    {
+        if(this.sessao.reservarAssentos(quantidade) == true)
+        {
+            this.setCliente(cliente);
+            this.setCodigoRetirada(cliente.getDocumento());
+            // TODO: Adicionar a uma Lista que guarde as Reservas;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public void imprimirIngresso()
+    {
+        this.sessao.recuperarDados();
+    }
+
+    public boolean confirmarReservaIngresso(String codigoRetirada, int quantidade)
+    {
+        // TODO: Comparar código de retirada com a Lista de Reservas. Se existir, imprimir o(s) ingresso(s) e registrar a venda.
+        this.funcionario.setTotalVendas(this.funcionario.getTotalVendas() + quantidade); 
+        Funcionario.setTotalVendasCinema(Funcionario.getTotalVendasCinema() + quantidade);
+        this.imprimirIngresso();
+        return true;
     }
     
     public static void main(String[] args) {

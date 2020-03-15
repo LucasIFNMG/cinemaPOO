@@ -1,25 +1,25 @@
 class SalaCinema{
-    private int numero;
+    private int numeroSala;
     private int capacidadeAssentos;
 
-    public SalaCinema(int numero, int capacidadeAssentos)
+    public SalaCinema(int numeroSala, int capacidadeAssentos)
     {
-        this.numero = numero;
+        this.numeroSala = numeroSala;
         this.capacidadeAssentos = capacidadeAssentos;
     }
 
     /**
      * @return the numero
      */
-    public int getNumero() {
-        return numero;
+    public int getNumeroSala() {
+        return numeroSala;
     }
 
     /**
      * @param numero the numero to set
      */
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public void setNumeroSala(int numeroSala) {
+        this.numeroSala = numeroSala;
     }
 
     /**
