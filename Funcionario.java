@@ -3,7 +3,10 @@ class Funcionario
     private String nome;
     private int id;
     private String cpf;
-    private int nivelAcesso;
+    private int nivelAcesso;    //0: Apenas Vendas  1(Gerente): Editar Sessões
+    private int totalVendas;
+    private static int totalVendasCinema;
+
 
     public Funcionario(String nome, int id, String cpf)
     {
@@ -67,6 +70,20 @@ class Funcionario
      */
     public void setNivelAcesso(int nivelAcesso) {
         this.nivelAcesso = nivelAcesso;
+    }
+
+    /**
+     * @return the totalVendas
+     */
+    public int getTotalVendas() {
+        return totalVendas;
+    }
+
+    /**
+     * @param totalVendas the totalVendas to set
+     */
+    public void setTotalVendas(int totalVendas) {
+        this.totalVendas = totalVendas;
     }
 
     public static void main(String[] args) {

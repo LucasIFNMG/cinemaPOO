@@ -1,17 +1,18 @@
 class Ingresso
 {
-
     // No caso de Meia-entrada ou Reserva, deve-se pedir os dados do cliente
     private Sessao sessao;
     private boolean isMeiaEntrada;
     private Funcionario funcionario;
     private Cliente cliente;
+    private float preco;
 
     public Ingresso(Sessao sessao, boolean isMeiaEntrada, Funcionario funcionario)
     {
         this.sessao = sessao;
         this.isMeiaEntrada = isMeiaEntrada;
         this.funcionario = funcionario;
+        this.preco = sessao.getPreco();
     }
 
     /**
@@ -66,6 +67,26 @@ class Ingresso
         this.cliente = cliente;
     }
 
+    /**
+     * @return the preco
+     */
+    public float getPreco() {
+        return preco;
+    }
+
+    public boolean vender(int quantidade)
+    {
+        if(this.sessao.reservarAssentos(quantidade) == true)
+        {
+            this.funcionario.setTotalVendas(this.funcionario.getTotalVendas()+quantidade); 
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
     public static void main(String[] args) {
         
     }

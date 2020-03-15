@@ -3,10 +3,11 @@ class Filme{
     private String genero;
     private int duracao;
     private String sinopse;
-    private int censura;
+    private String censura;
     private Ator atorPrincipal;
+    private Diretor diretor;
 
-    public Filme(String nome, String genero, int duracao, String sinopse, int censura, Ator atorPrincipal)
+    public Filme(String nome, String genero, int duracao, String sinopse, String censura, Ator atorPrincipal, Diretor diretor)
     {
         this.nome = nome;
         this.genero = genero;
@@ -14,6 +15,7 @@ class Filme{
         this.sinopse = sinopse;
         this.censura = censura;
         this.atorPrincipal = atorPrincipal;
+        this.diretor = diretor;
     }
 
     /**
@@ -75,14 +77,14 @@ class Filme{
     /**
      * @return the censura
      */
-    public int getCensura() {
+    public String getCensura() {
         return censura;
     }
 
     /**
      * @param censura the censura to set
      */
-    public void setCensura(int censura) {
+    public void setCensura(String censura) {
         this.censura = censura;
     }
 
@@ -98,6 +100,29 @@ class Filme{
      */
     public void setAtorPrincipal(Ator atorPrincipal) {
         this.atorPrincipal = atorPrincipal;
+    }
+
+    /**
+     * @return the diretor
+     */
+    public Diretor getDiretor() {
+        return diretor;
+    }
+
+    /**
+     * @param diretor the diretor to set
+     */
+    public void setDiretor(Diretor diretor) {
+        this.diretor = diretor;
+    }
+
+    public void recuperarDados()
+    {
+        System.out.println("Filme: " + this.getNome()
+                        + "\nGênero: " + this.getGenero()
+                        + "\nDuração: " + this.getDuracao() + " mins"    
+                        + "\nSinopse: " + this.getSinopse()
+                        + "\nCensura: " + this.getCensura() );
     }
 
     public static void main(String[] args) {

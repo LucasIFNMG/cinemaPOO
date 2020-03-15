@@ -1,20 +1,23 @@
 import java.util.Calendar;
+import java.text.DateFormat;
+import java.util.Date;
 
 class Sessao{
     private Filme filme;
-    private boolean isDublado;
-    private boolean is3d;
+    private String exibicao;
+    private String dimensao;
     private SalaCinema sala;
-    private Calendar dia;
-    private Calendar horario;
+    private int dia;
+    private int horario;
     private int assentosDisponiveis;
     private float preco;
+    // private boolean isPreEstreia;
 
-    public Sessao(Filme filme, boolean isDublado, boolean is3d, SalaCinema sala, Calendar dia, Calendar horario)
+    public Sessao(Filme filme, String exibicao, String dimensao, SalaCinema sala, int dia, int horario)
     {
         this.filme = filme;
-        this.isDublado = isDublado;
-        this.is3d = is3d;
+        this.exibicao = exibicao;
+        this.dimensao = dimensao;
         this.sala = sala;
         this.dia = dia;
         this.horario = horario;
@@ -35,24 +38,24 @@ class Sessao{
         this.filme = filme;
     }
 
-    public boolean getIsDublado()
+    public String getExibicao()
     {
-        return this.isDublado;
+        return this.exibicao;
     }
 
-    public void setIsDublado(boolean isDublado)
+    public void setIsDublado(String exibicao)
     {
-        this.isDublado = isDublado;
+        this.exibicao = exibicao;
     }
 
-    public boolean getIs3d()
+    public String getDimensao()
     {
-        return this.is3d;
+        return this.dimensao;
     }
 
-    public void setIs3d(boolean is3d)
+    public void setDimensao(String dimensao)
     {
-        this.is3d = is3d;
+        this.dimensao = dimensao;
     }
 
     /**
@@ -71,37 +74,31 @@ class Sessao{
 
     /**
      * @return the dia
+    // calendar.get(Calendar.DAY_OF_WEEK), calendar.get(Calendar.HOUR_OF_DAY)
      */
-    public Calendar getDia() {
+    public int getDia() {
         return dia;
     }
 
     /**
      * @param dia the dia to set
      */
-    public void setDia(Calendar dia) {
+    public void setDia(int dia) {
         this.dia = dia;
     }
 
     /**
      * @return the horario
      */
-    public Calendar getHorario() {
+    public int getHorario() {
         return horario;
     }
 
     /**
      * @param horario the horario to set
      */
-    public void setHorario(Calendar horario) {
+    public void setHorario(int horario) {
         this.horario = horario;
-    }
-
-    /**
-     * @param preco the preco to set
-     */
-    public void setPreco(float preco) {
-        this.preco = preco;
     }
 
     /**
@@ -118,11 +115,123 @@ class Sessao{
         return assentosDisponiveis;
     }
 
+    public boolean reservarAssentos(int quantidade)
+    {
+        if(this.getAssentosDisponiveis() >= quantidade)
+        {
+            this.assentosDisponiveis-= quantidade;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public float setPreco() {
+
+        switch(this.dia){
+            // 1: Domingo
+            case 1:
+                if(this.getDimensao() == "3D")
+                {
+                    preco = 30.00f;
+                    break;
+                }
+                else
+                {
+                    preco = 26.000f;
+                    break;
+                }
+            // 2: Segunda-feira
+            case 2:
+                if(this.getDimensao() == "3D")
+                {
+                    preco = 20.00f;
+                    break;
+                }
+                else
+                {
+                    preco = 18.00f;
+                    break;
+                }
+            // 3: Terça-feira
+            case 3:
+                if(this.getDimensao() == "3D")
+                {
+                    preco = 22.00f;
+                    break;
+                }
+                else
+                {
+                    preco = 20.00f;
+                    break;
+                }
+            // 4: Quarta-feira
+            case 4:
+                if(this.getDimensao() == "3D")
+                {
+                    preco = 20.00f;
+                    break;
+                }
+                else
+                {
+                    preco = 18.00f;
+                    break;
+                }
+            // 5: Quinta-feira
+            case 5:
+                if(this.getDimensao() == "3D")
+                {
+                    preco = 22.00f;
+                    break;
+                }
+                else
+                {
+                    preco = 20.00f;
+                    break;
+                }
+            // 6: Sexta-feira
+            case 6:
+                if(this.getDimensao() == "3D")
+                {
+                    preco = 22.00f;
+                    break;
+                }
+                else
+                {
+                    preco = 20.00f;
+                    break;
+                }
+            // 7: Sábado
+            case 7:
+                if(this.getDimensao() == "3D")
+                {
+                    preco = 30.00f;
+                    break;
+                }
+                else
+                {
+                    preco = 26.00f;
+                    break;
+                }
+        }
+
+        return preco;
+    }
+
+    public void recuperarDados()
+    {
+        this.filme.recuperarDados();
+        System.out.println("Exibição: " + this.getExibicao()
+                        + "\nDimensão: " + this.getDimensao() 
+                        + "\nDia: " + this.getDia()
+                        + "\nHorário: " + this.getHorario()
+                        + "\nPreço: R$ " + this.setPreco()
+                        + "\nAssentos Disponíveis: " + this.getAssentosDisponiveis() );
+    }
     public static void main(String[] args) {
         
     }
-
-    
-
 
 }
