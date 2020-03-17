@@ -1,6 +1,5 @@
-import java.util.Calendar;
-import java.text.DateFormat;
-import java.util.Date;
+import java.math.BigDecimal;
+import java.text.*;
 
 class Sessao{
     private Filme filme;
@@ -10,7 +9,7 @@ class Sessao{
     private int dia;
     private int horario;
     private int assentosDisponiveis;
-    private float preco;
+    private BigDecimal preco;
     // private boolean isPreEstreia;
 
     public Sessao(Filme filme, String exibicao, String dimensao, SalaCinema sala, int dia, int horario)
@@ -122,105 +121,113 @@ class Sessao{
         }
     }
 
-    public float getPreco() {
+    public BigDecimal getPreco() {
 
         switch(this.dia){
             // 1: Domingo
             case 1:
                 if(this.dimensao == "3D")
                 {
-                    this.preco = 30.00f;
+                    this.preco = new BigDecimal("30.00");
                     break;
                 }
                 else
                 {
-                    this.preco = 26.00f;
+                    this.preco = new BigDecimal("26.00");
                     break;
                 }
             // 2: Segunda-feira
             case 2:
                 if(this.dimensao == "3D")
                 {
-                    this.preco = 20.00f;
+                    this.preco = new BigDecimal("20.00");
                     break;
                 }
                 else
                 {
-                    this.preco = 18.00f;
+                    this.preco = new BigDecimal("18.00");
                     break;
                 }
             // 3: Terça-feira
             case 3:
                 if(this.dimensao == "3D")
                 {
-                    this.preco = 22.00f;
+                    this.preco = new BigDecimal("22.00");
                     break;
                 }
                 else
                 {
-                    this.preco = 20.00f;
+                    this.preco = new BigDecimal("20.00");
                     break;
                 }
             // 4: Quarta-feira
             case 4:
                 if(this.dimensao == "3D")
                 {
-                    this.preco = 20.00f;
+                    this.preco = new BigDecimal("20.00");
                     break;
                 }
                 else
                 {
-                    this.preco = 18.00f;
+                    this.preco = new BigDecimal("18.00");
                     break;
                 }
             // 5: Quinta-feira
             case 5:
                 if(this.dimensao == "3D")
                 {
-                    this.preco = 22.00f;
+                    this.preco = new BigDecimal("22.00");
                     break;
                 }
                 else
                 {
-                    this.preco = 20.00f;
+                    this.preco = new BigDecimal("20.00");
                     break;
                 }
             // 6: Sexta-feira
             case 6:
                 if(this.dimensao == "3D")
                 {
-                    this.preco = 22.00f;
+                    this.preco = new BigDecimal("22.00");
                     break;
                 }
                 else
                 {
-                    this.preco = 20.00f;
+                    this.preco = new BigDecimal("20.00");
                     break;
                 }
             // 7: Sábado
             case 7:
                 if(this.dimensao == "3D")
                 {
-                    this.preco = 30.00f;
+                    this.preco = new BigDecimal("30.00");
                     break;
                 }
                 else
                 {
-                    preco = 26.00f;
+                    preco = new BigDecimal("26.00");
                     break;
                 }
         }
         return preco;
     }
 
-    public void recuperarDados()
+    public void recuperarDadosGeral()
     {
         this.filme.recuperarDados();
-        System.out.println("Exibição: " + this.getExibicao()
+        this.recuperarDadosSessao();
+    }
+
+    public void recuperarDadosSessao()
+    {
+        NumberFormat df = NumberFormat.getCurrencyInstance();
+        
+        System.out.println("Filme: " +this.filme.getNome()
+                        + "\nExibição: " + this.getExibicao()
                         + "\nDimensão: " + this.getDimensao() 
                         + "\nDia: " + this.getDia()
                         + "\nHorário: " + this.getHorario()
-                        + "\nPreço: R$ " + this.getPreco()
+                        + "\nPreço: " + df.format(this.getPreco()) 
                         + "\nSala: " + this.sala.getNumeroSala() );
                         // + "\nAssentos Disponíveis: " + this.getAssentosDisponiveis() );
     }

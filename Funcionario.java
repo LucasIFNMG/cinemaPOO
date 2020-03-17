@@ -1,11 +1,18 @@
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+
 class Funcionario
 {
     private String nome;
     private int id;
     private String cpf;
-    private int nivelAcesso;    //0: Apenas Vendas.  1(Gerente): Editar Sessões
-    private int totalVendas = 0;
-    private static int totalVendasCinema = 0;
+    private int nivelAcesso;    //0: Apenas Vendas.  1(Gerente): Editar Sessões, Gerar relatórios
+    private int numVendasIngressos = 0;
+    private BigDecimal totalVendido;
+    private BigDecimal comissao;
+    private static int numVendasCinema = 0;
+    private static BigDecimal totalArrecadadoCinema;
+    
 
     public Funcionario(String nome, int id, String cpf)
     {
@@ -74,31 +81,89 @@ class Funcionario
     /**
      * @return the totalVendas
      */
-    public int getTotalVendas() {
-        return totalVendas;
+    public int getNumVendasIngressos() {
+        return numVendasIngressos;
     }
 
     /**
      * @param totalVendas the totalVendas to set
      */
-    public void setTotalVendas(int totalVendas) {
-        this.totalVendas = totalVendas;
+    public void setNumVendasIngressos(int numVendasIngressos) {
+        this.numVendasIngressos = numVendasIngressos;
+    }
+
+    /**
+     * @return the totalVendido
+     */
+    public BigDecimal getTotalVendido() {
+        return this.totalVendido;
+    }
+
+    /**
+     * @param totalVendido the totalVendido to set
+     */
+    public void setTotalVendido(BigDecimal totalVendido) {
+        this.totalVendido = totalVendido;
     }
 
     /**
      * @return the totalVendasCinema
      */
-    public static int getTotalVendasCinema() {
-        return Funcionario.totalVendasCinema;
+    public static int getNumVendasCinema() {
+        return Funcionario.numVendasCinema;
     }
 
     /**
      * @param totalVendasCinema the totalVendasCinema to set
      */
-    public static void setTotalVendasCinema(int totalVendasCinema) {
-        Funcionario.totalVendasCinema = totalVendasCinema;
+    public static void setNumVendasCinema(int numVendasCinema) {
+        Funcionario.numVendasCinema = numVendasCinema;
+    }
+     /*
+     * @return the comissao
+     */
+    public BigDecimal getComissao() {
+        // totalVendido = this.getTotalVendido();
+        BigDecimal percent10 = new BigDecimal("0.1");  
+        this.comissao = this.getTotalVendido().multiply(percent10);
+        return this.comissao;
     }
 
+    /**
+     * @return the totalArrecadadoCinema
+     */
+    public static BigDecimal getTotalArrecadadoCinema() {
+        return Funcionario.totalArrecadadoCinema;
+    }
+
+    /**
+     * @param totalArrecadadoCinema the totalArrecadadoCinema to set
+     */
+    public static void setTotalArrecadadoCinema(BigDecimal totalArrecadadoCinema) {
+        Funcionario.totalArrecadadoCinema = totalArrecadadoCinema;
+    }
+
+    public void recuperarDadosPagamentoFunc()
+    {
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
+
+        System.out.println("Exibindo informações do Funcionário " + this.getNome() + "...");
+        System.out.println("---------------------------------------------");
+        System.out.println("Nº Ingressos vendidos pelo Func: " + this.getNumVendasIngressos());
+        // System.out.println("Nº Ingressos vendidos do Cinema inteiro: " + Funcionario.getNumVendasCinema());
+        String string = nf.format(this.getTotalVendido());
+        System.out.println("Total Vendido pelo Func: " + string);
+
+        String string2 = nf.format(this.getComissao());
+        System.out.println("Total de Comissão do Func: " + string2);
+        System.out.println("---------------------------------------------");
+        /*
+        System.out.println("---------------------------------------------");
+        String string3 = nf.format(Funcionario.getTotalArrecadadoCinema());
+        System.out.println("Total Arrecadado pelo Cinema: " + string3);
+        System.out.println("---------------------------------------------");
+        */
+    }
     public static void main(String[] args) {
         
     }

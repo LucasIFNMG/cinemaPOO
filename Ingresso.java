@@ -1,3 +1,5 @@
+import java.math.BigDecimal;
+
 class Ingresso
 {
     // No caso de Meia-entrada ou Reserva, deve-se pedir os dados do cliente
@@ -5,8 +7,9 @@ class Ingresso
     private boolean isMeiaEntrada;
     private Funcionario funcionario;
     private Cliente cliente;
-    private float preco;
+    private BigDecimal preco;
     private String codigoRetirada;
+    private int id = 0;
 
     public Ingresso(Sessao sessao, boolean isMeiaEntrada, Funcionario funcionario)
     {
@@ -14,6 +17,7 @@ class Ingresso
         this.isMeiaEntrada = isMeiaEntrada;
         this.funcionario = funcionario;
         this.preco = sessao.getPreco();
+        this.id++;
         // this.cliente = cliente;
     }
 
@@ -72,7 +76,7 @@ class Ingresso
     /**
      * @return the preco
      */
-    public float getPreco() {
+    public BigDecimal getPreco() {
         return preco;
     }
 
@@ -90,27 +94,26 @@ class Ingresso
         this.codigoRetirada = codigoRetirada;
     }
 
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
     public boolean vender(int quantidade)
     {
         if(this.sessao.reservarAssentos(quantidade) == true)
         {
-            this.funcionario.setTotalVendas(this.funcionario.getTotalVendas()+quantidade); 
-            Funcionario.setTotalVendasCinema(Funcionario.getTotalVendasCinema() + quantidade);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    /*
-    public boolean reservarIngresso(Cliente cliente, int quantidade)
-    {
-        if(this.sessao.reservarAssentos(quantidade) == true)
-        {
+            // Incrementa o nº de Vendas do Funcionário e o nº de Vendas do Cinema
+            this.funcionario.setNumVendasIngressos(this.funcionario.getNumVendasIngressos() + quantidade); 
+            Funcionario.setNumVendasCinema(Funcionario.getNumVendasCinema() + quantidade);
+            
+            // Incrementa o valor($) arrecadado pelo Funcionário e pelo Cinema
+            BigDecimal valorVenda = this.getPreco().multiply(BigDecimal.valueOf(quantidade));
+            this.funcionario.setTotalVendido(valorVenda.add(this.funcionario.getTotalVendido()));
+            Funcionario.setTotalArrecadadoCinema(valorVenda.add(Funcionario.getTotalArrecadadoCinema()));
 
-            this.setCodigoRetirada(cliente.getDocumento());
-            // TODO: Adicionar a uma Lista que guarde as Reservas;
             return true;
         }
         else
@@ -118,7 +121,6 @@ class Ingresso
             return false;
         }
     }
-    */
 
     public boolean reservarIngresso(Cliente cliente, int quantidade)
     {
@@ -136,14 +138,40 @@ class Ingresso
     }
     public void imprimirIngresso()
     {
-        this.sessao.recuperarDados();
+        System.out.println("Ingresso #" + this.getId());
+        this.sessao.recuperarDadosSessao();
     }
 
     public boolean confirmarReservaIngresso(String codigoRetirada, int quantidade)
     {
         // TODO: Comparar código de retirada com a Lista de Reservas. Se existir, imprimir o(s) ingresso(s) e registrar a venda.
-        this.funcionario.setTotalVendas(this.funcionario.getTotalVendas() + quantidade); 
-        Funcionario.setTotalVendasCinema(Funcionario.getTotalVendasCinema() + quantidade);
+        
+        // Incrementa o nº de Vendas do Funcionário e o nº de Vendas do Cinema
+        this.funcionario.setNumVendasIngressos(this.funcionario.getNumVendasIngressos() + quantidade); 
+        Funcionario.setNumVendasCinema(Funcionario.getNumVendasCinema() + quantidade);
+
+        // Incrementa o valor($) arrecadado pelo Funcionário e pelo Cinema
+        BigDecimal valorVenda = this.getPreco().multiply(BigDecimal.valueOf(quantidade));
+        if(this.funcionario.getTotalVendido() != null)
+        {
+            valorVenda = valorVenda.add(this.funcionario.getTotalVendido());
+            this.funcionario.setTotalVendido(valorVenda);
+        }
+        else
+        {
+            this.funcionario.setTotalVendido(valorVenda);
+        }
+
+        if(Funcionario.getTotalArrecadadoCinema() != null)
+        {
+            valorVenda = valorVenda.add(Funcionario.getTotalArrecadadoCinema());
+            Funcionario.setTotalArrecadadoCinema(valorVenda);
+        }
+        else
+        {
+            Funcionario.setTotalArrecadadoCinema(valorVenda);
+        }
+        
         this.imprimirIngresso();
         return true;
     }
