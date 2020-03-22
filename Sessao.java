@@ -205,14 +205,15 @@ class Sessao{
                 }
                 else
                 {
-                    preco = new BigDecimal("26.00");
+                    this.preco = new BigDecimal("26.00");
                     break;
                 }
         }
         return preco;
     }
 
-    public void recuperarDadosGeral()
+    // Dados Filme + Sessão
+    public void recuperarDadosFilmeSessao()   
     {
         this.filme.recuperarDados();
         this.recuperarDadosSessao();
@@ -232,10 +233,6 @@ class Sessao{
                         // + "\nAssentos Disponíveis: " + this.getAssentosDisponiveis() );
     }
 
-    public Filme getSessao(Filme filme)
-    {
-        return filme;
-    }
     public static void main(String[] args) {
         
     }

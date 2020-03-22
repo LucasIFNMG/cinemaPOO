@@ -1,26 +1,26 @@
 class Cartaz
 {
-    Filme filme;
+    Sessao sessao;
     Data dataInicio;
     Data dataTermino;
 
-    public Cartaz(Filme filme)
+    public Cartaz(Sessao sessao)
     {
-        this.filme = filme;
+        this.sessao = sessao;
     }
 
     /**
      * @return the filme
      */
-    public Filme getfilme() {
-        return filme;
+    public Sessao getSessao() {
+        return sessao;
     }
 
     /**
      * @param filme the filme to set
      */
-    public void setfilme(Filme filme) {
-        this.filme = filme;
+    public void setFilme(Sessao sessao) {
+        this.sessao = sessao;
     }
 
     /**
@@ -49,6 +49,13 @@ class Cartaz
      */
     public void setDataTermino(Data dataTermino) {
         this.dataTermino = dataTermino;
+    }
+
+    public void recuperarSessoes()
+    {
+        System.out.println("Filmes em Cartaz: ");
+        this.getSessao().recuperarDadosSessao();
+        // System.out.println(this.getSessao().getSala().getNumeroSala());
     }
 
     public static void main(String[] args) {

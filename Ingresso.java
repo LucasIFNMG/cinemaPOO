@@ -113,11 +113,12 @@ class Ingresso
             BigDecimal valorVenda = this.getPreco().multiply(BigDecimal.valueOf(quantidade));
             this.funcionario.setTotalVendido(valorVenda.add(this.funcionario.getTotalVendido()));
             Funcionario.setTotalArrecadadoCinema(valorVenda.add(Funcionario.getTotalArrecadadoCinema()));
-
+            System.out.println("Ingresso(s) reservado(s) com sucesso!");
             return true;
         }
         else
         {
+            System.out.println("NÃO foi possível reservar o(s) ingresso(s)!");
             return false;
         }
     }
@@ -129,10 +130,12 @@ class Ingresso
             this.setCliente(cliente);
             this.setCodigoRetirada(cliente.getDocumento());
             // TODO: Adicionar a uma Lista que guarde as Reservas;
+            System.out.println("Ingresso(s) reservado(s) com sucesso!");
             return true;
         }
         else
         {
+            System.out.println("NÃO foi possível reservar o(s) ingresso(s)!");
             return false;
         }
     }

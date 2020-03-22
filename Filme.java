@@ -6,6 +6,7 @@ class Filme{
     private String censura;
     private Ator atorPrincipal;
     private Diretor diretor;
+    private Data dataLancamento;
 
     public Filme(String nome, String genero, int duracao, String sinopse, String censura, Ator atorPrincipal, Diretor diretor)
     {
@@ -114,6 +115,13 @@ class Filme{
      */
     public void setDiretor(Diretor diretor) {
         this.diretor = diretor;
+    }
+
+    /**
+     * @return the dataLancamento
+     */
+    public Data getDataLancamento() {
+        return dataLancamento;
     }
 
     public void recuperarDados()

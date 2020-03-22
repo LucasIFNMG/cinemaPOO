@@ -37,6 +37,11 @@ class Lancamento
         this.dataInicio = dataInicio;
     }
 
+    public void recuperarLancamentos()
+    {
+        this.getFilme().recuperarDados();
+    }
+
     public static void main(String[] args) {
         
     }

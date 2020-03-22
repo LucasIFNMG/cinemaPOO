@@ -10,10 +10,8 @@ class MainCinema{
     Ator atorReiLeao = new Ator("Donald Glover");
     Diretor diretorReiLeao = new Diretor("Jon Favreau");
     Filme reiLeao = new Filme("O Rei Leão", "Drama", 118, 
-                              "Traído e exilado de seu reino, o leãozinho Simba(...)", 
-                              "Livre", atorReiLeao, diretorReiLeao);
-
-    Cartaz cartaz = new Cartaz(reiLeao);    // Cartaz = Todos os filmes (Lista) e suas respectivas Sessões                    
+                            "Traído e exilado de seu reino, o leãozinho Simba(...)", 
+                            "Livre", atorReiLeao, diretorReiLeao);                    
 
     SalaCinema sala1 = new SalaCinema(1, 100);
     Sessao sessaoReiLeao = new Sessao(reiLeao, "Legendado", "2D", sala1, calendar.get(Calendar.DAY_OF_WEEK), calendar.get(Calendar.HOUR_OF_DAY));
@@ -26,19 +24,12 @@ class MainCinema{
     System.out.println("---------------------------------------------");
     System.out.println("Exibindo Informações do Filme " + reiLeao.getNome());
     System.out.println("---------------------------------------------");
-    sessaoReiLeao.recuperarDadosGeral();
+    sessaoReiLeao.recuperarDadosFilmeSessao();
 
     System.out.println("---------------------------------------------");
     System.out.println("Reservando um ingresso...");
     System.out.println("---------------------------------------------");
-    if(novoIngresso2.reservarIngresso(novoCliente, 1))
-    {
-        System.out.println("Reserva efetuada com sucesso!");
-    }
-    else{
-        System.out.println("ERRO na operação de reserva!");
-        return;
-    }
+    novoIngresso2.reservarIngresso(novoCliente, 1);
     System.out.println("---------------------------------------------");
     System.out.println("Exibindo informações da Sessão...");
     System.out.println("---------------------------------------------");
@@ -48,13 +39,7 @@ class MainCinema{
     novoFuncionario.recuperarDadosPagamentoFunc();
     System.out.println("Vendendo ingressos...");
     System.out.println("---------------------------------------------");
-    if(novoIngresso.vender(9)){
-        System.out.println("Venda efetuada com sucesso!");
-    }
-    else{
-        System.out.println("ERRO na operação de venda!");
-        return;
-    }
+    novoIngresso.vender(9);
     System.out.println("---------------------------------------------");
 
     novoFuncionario.recuperarDadosPagamentoFunc();
@@ -64,6 +49,29 @@ class MainCinema{
     System.out.println("Total Arrecadado pelo Cinema: " + string3);
     System.out.println("---------------------------------------------");
     
-    
+    System.out.println("Alterando a Sala de uma sessão...");
+    System.out.println("---------------------------------------------");
+    SalaCinema sala2 = new SalaCinema(2, 100);
+    sessaoReiLeao.setSala(sala2);
+    System.out.println("Nova sala da sessão Rei Leão: " + sessaoReiLeao.getSala().getNumeroSala());
+    System.out.println("---------------------------------------------");
+
+    Cartaz cartaz = new Cartaz(sessaoReiLeao);    // Cartaz = Todos as Sessões e seus respectivos filmes
+    System.out.println("Exibindo Filmes em Cartaz...");
+    System.out.println("---------------------------------------------");
+    cartaz.recuperarSessoes();
+
+    Ator atorMatrix4 = new Ator("Keanu Reeves");
+    Diretor diretorMatrix4 = new Diretor("Lana Wachowski");
+    Filme matrix4 = new Filme("The Matrix 4", "Ficção Científica", 120, 
+                            "Continuação da franquia Matrix", 
+                            "16", atorMatrix4, diretorMatrix4);
+
+    Lancamento novoLancamento = new Lancamento(matrix4);
+    System.out.println("---------------------------------------------");
+    System.out.println("Exibindo Filmes em Lançamento...");
+    System.out.println("---------------------------------------------");
+    novoLancamento.getFilme().recuperarDados();
+
     }
 }   
