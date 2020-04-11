@@ -1,7 +1,7 @@
 import java.text.NumberFormat;
 import java.math.BigDecimal;
 import java.util.Calendar;
-// TODO: Add Listas
+// TODO: Add Listas/Arrays
 
 
 class MainCinemaVetores{
