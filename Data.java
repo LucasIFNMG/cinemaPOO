@@ -41,6 +41,6 @@ public class Data
     }
 
     public static void main(String[] args) {
-        Data testaData = new Data(12, 01, 1993);
+        
     }
 }
