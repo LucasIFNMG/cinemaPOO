@@ -1,6 +1,6 @@
 class Diretor
 {
-    private String nome;
+    private final String nome;
 
     public Diretor(String nome)
     {
@@ -13,14 +13,6 @@ class Diretor
     public String getNome() {
         return nome;
     }
-
-    /**
-     * @param nome the nome to set
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public static void main(String[] args) {
         
     }

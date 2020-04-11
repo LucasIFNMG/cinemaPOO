@@ -1,61 +1,46 @@
-class Data
+public class Data
 {
-    private int dia;
-    private int mes;
-    private int ano;
+    private int month;
+    private int day;
+    private int year;
 
-    public Data(int dia, int mes, int ano)
+    // Constantes apresentam static final
+    private static final int[] daysPerMonth =
+        {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    // Construtor: confirma o valor adequado p/ o mês e dia dado o ano
+    public Data(int day, int month, int year)
     {
-        this.dia = dia;
-        this.mes = mes;
-        this.ano = ano;
+        if(month <= 0 || month > 12)
+            throw new IllegalArgumentException(
+                "month (" + month + ") must be 1-12");
+        
+        if(day <= 0 ||
+          (day > daysPerMonth[month] && !(month == 2 && day == 29)))
+          throw new IllegalArgumentException("day (" + day +
+            ") out-of-range for the specified month and year");
+        
+        // Verifique no ano bissexto se o mês é 2 e o dia é 29
+        if(month == 2 && day == 29 && !(year % 400 == 0 ||
+            (year % 4 == 0 && year % 100 != 0)))
+           throw new IllegalArgumentException("day (" + day +
+            ") out-of-range for the specified month and year");
+
+        this.day = day;
+        this.month = month;
+        this.year = year;
+
+        System.out.printf(
+            "Date object constructor for date %s%n", this);
     }
 
-    public int getDia()
+    // retorna uma String no formato dia/mês/ano
+    public String toString()
     {
-        return this.dia;
-    }
-
-    public void setDia(int dia)
-    {
-        this.dia = dia;
-    }
-
-    public int getMes()
-    {
-        return this.mes;
-    }
-
-    public void setMes(int mes)
-    {
-        this.mes = mes;
-    }
-
-    public int getAno()
-    {
-        return this.ano;
-    }
-
-    public void setAno(int ano)
-    {
-        this.ano = ano;
-    }
-
-    String formatoBrasileiro()
-    {
-        String formatoBrasileiro;
-        formatoBrasileiro = this.getDia() + "/" + this.getMes() + "/" + this.getAno();
-        return formatoBrasileiro;
-    }
-
-    String formatoAmericano()
-    {
-        String formatoAmericano;
-        formatoAmericano = this.getMes() + "/" + this.getDia() + "/" + this.getAno();
-        return formatoAmericano;
+        return String.format("%d/%d/%d", day, month, year);
     }
 
     public static void main(String[] args) {
-        
+        Data testaData = new Data(12, 01, 1993);
     }
 }

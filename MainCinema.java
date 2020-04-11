@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Calendar;
 
@@ -15,7 +16,7 @@ class MainCinema{
 
     SalaCinema sala1 = new SalaCinema(1, 100);
     Sessao sessaoReiLeao = new Sessao(reiLeao, "Legendado", "2D", sala1, calendar.get(Calendar.DAY_OF_WEEK), calendar.get(Calendar.HOUR_OF_DAY));
-    Funcionario novoFuncionario = new Funcionario("Lucas", 1, "111.222.333-44");
+    Funcionario novoFuncionario = new Funcionario("Lucas", 1, "111.222.333-44", new BigDecimal("1000.00"));
     
     Ingresso novoIngresso = new Ingresso(sessaoReiLeao, false, novoFuncionario);
     Ingresso novoIngresso2 = new Ingresso(sessaoReiLeao, false, novoFuncionario);

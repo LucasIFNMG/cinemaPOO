@@ -1,10 +1,15 @@
 class Cliente{
-    private String nome;
-    private int id;
+    private final String nome;
+    private final int id;
     private String documento;
 
     public Cliente(String nome, int id, String documento)
     {
+
+        if(id <= 0)
+            throw new IllegalArgumentException(
+                "ID inválido!");
+        
         this.nome = nome;
         this.id = id;
         this.documento = documento;
@@ -18,24 +23,10 @@ class Cliente{
     }
 
     /**
-     * @param nome the nome to set
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    /**
      * @return the id
      */
     public int getId() {
         return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
     }
 
     /**

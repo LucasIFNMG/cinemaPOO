@@ -3,23 +3,35 @@ import java.text.NumberFormat;
 
 class Funcionario
 {
-    private String nome;
+    private final String nome;
     private int id;
-    private String cpf;
-    private int nivelAcesso;    //0: Apenas Vendas.  1(Gerente): Editar Sessões, Gerar relatórios
+    private final String cpf;
     private int numVendasIngressos = 0;
+    private BigDecimal salarioBase;
     private BigDecimal totalVendido;
-    private BigDecimal comissao;
+    private BigDecimal totalComissao;
+    private BigDecimal porcentComissao = new BigDecimal("0.1");
     private static int numVendasCinema = 0;
     private static BigDecimal totalArrecadadoCinema;
     
 
-    public Funcionario(String nome, int id, String cpf)
+    public Funcionario(String nome, int id, String cpf, BigDecimal salarioBase)
     {
+
+        if (id <= 0)
+            throw new IllegalArgumentException(
+                "ID inválido!");
+        
+            // compareTo: retorna -1, 0 ou 1. -1: 1º parâmetro MENOR do que o 2º. 0: 1º == 2º. 1: 1º > 2º.
+        if(salarioBase.compareTo(BigDecimal.ZERO) == -1)
+            throw new IllegalArgumentException(
+                "Salário-base deve ser >= 0! ");
+
         this.nome = nome;
         this.id = id;
         this.cpf = cpf;
-        this.nivelAcesso = 0;
+        this.salarioBase = salarioBase;
+        // this.nivelAcesso = 0;
     }
 
     /**
@@ -30,24 +42,10 @@ class Funcionario
     }
 
     /**
-     * @param nome the nome to set
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    /**
      * @return the cpf
      */
     public String getCpf() {
         return cpf;
-    }
-
-    /**
-     * @param cpf the cpf to set
-     */
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     /**
@@ -58,24 +56,10 @@ class Funcionario
     }
 
     /**
-     * @param id the id to set
+     * @param numVendasIngressos the numVendasIngressos to set
      */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the nivelAcesso
-     */
-    public int getNivelAcesso() {
-        return nivelAcesso;
-    }
-
-    /**
-     * @param nivelAcesso the nivelAcesso to set
-     */
-    public void setNivelAcesso(int nivelAcesso) {
-        this.nivelAcesso = nivelAcesso;
+    public void setNumVendasIngressos(int numVendasIngressos) {
+        this.numVendasIngressos = numVendasIngressos;
     }
 
     /**
@@ -86,10 +70,10 @@ class Funcionario
     }
 
     /**
-     * @param totalVendas the totalVendas to set
+     * @param totalVendido the totalVendido to set
      */
-    public void setNumVendasIngressos(int numVendasIngressos) {
-        this.numVendasIngressos = numVendasIngressos;
+    public void setTotalVendido(BigDecimal totalVendido) {
+        this.totalVendido = totalVendido;
     }
 
     /**
@@ -97,13 +81,6 @@ class Funcionario
      */
     public BigDecimal getTotalVendido() {
         return this.totalVendido;
-    }
-
-    /**
-     * @param totalVendido the totalVendido to set
-     */
-    public void setTotalVendido(BigDecimal totalVendido) {
-        this.totalVendido = totalVendido;
     }
 
     /**
@@ -122,11 +99,18 @@ class Funcionario
      /*
      * @return the comissao
      */
-    public BigDecimal getComissao() {
+    public BigDecimal getTotalComissao() 
+    {
         // totalVendido = this.getTotalVendido();
-        BigDecimal percent10 = new BigDecimal("0.1");  
-        this.comissao = this.getTotalVendido().multiply(percent10);
-        return this.comissao;
+        this.totalComissao = this.getTotalVendido().multiply(porcentComissao);
+        return this.totalComissao;
+    }
+
+    /**
+     * @param totalArrecadadoCinema the totalArrecadadoCinema to set
+     */
+    public static void setTotalArrecadadoCinema(BigDecimal totalArrecadadoCinema) {
+        Funcionario.totalArrecadadoCinema = totalArrecadadoCinema;
     }
 
     /**
@@ -137,10 +121,15 @@ class Funcionario
     }
 
     /**
-     * @param totalArrecadadoCinema the totalArrecadadoCinema to set
+     * @param salarioBase the salarioBase to set
      */
-    public static void setTotalArrecadadoCinema(BigDecimal totalArrecadadoCinema) {
-        Funcionario.totalArrecadadoCinema = totalArrecadadoCinema;
+    public void setSalarioBase(BigDecimal salarioBase)
+    {
+        if(salarioBase.compareTo(BigDecimal.ZERO) == -1)
+            throw new IllegalArgumentException(
+                "Salário-base deve ser >= 0! ");
+        
+        this.salarioBase = salarioBase;
     }
 
     public void recuperarDadosPagamentoFunc()
@@ -154,7 +143,7 @@ class Funcionario
         String string = nf.format(this.getTotalVendido());
         System.out.println("Total Vendido pelo Func: " + string);
 
-        String string2 = nf.format(this.getComissao());
+        String string2 = nf.format(this.getTotalComissao());
         System.out.println("Total de Comissão do Func: " + string2);
         System.out.println("---------------------------------------------");
         /*

@@ -1,15 +1,8 @@
 class Ator{
-    private String nome;
+    private final String nome;
 
     public Ator(String nome)
     {
-        this.nome = nome;
-    }
-
-    /**
-     * @param nome the nome to set
-     */
-    public void setNome(String nome) {
         this.nome = nome;
     }
 

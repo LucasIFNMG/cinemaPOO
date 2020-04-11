@@ -7,9 +7,15 @@ class Filme{
     private Ator atorPrincipal;
     private Diretor diretor;
     private Data dataLancamento;
+    private static int totalFilmes = 0;
 
     public Filme(String nome, String genero, int duracao, String sinopse, String censura, Ator atorPrincipal, Diretor diretor)
     {
+
+        if(duracao <= 0)
+            throw new IllegalArgumentException(
+                "Duração(mins) inválida!");
+
         this.nome = nome;
         this.genero = genero;
         this.duracao = duracao;
@@ -17,6 +23,8 @@ class Filme{
         this.censura = censura;
         this.atorPrincipal = atorPrincipal;
         this.diretor = diretor;
+        Filme.totalFilmes++;
+        
     }
 
     /**
@@ -58,6 +66,10 @@ class Filme{
      * @param duracao the duracao to set
      */
     public void setDuracao(int duracao) {
+        if(duracao <= 0)
+            throw new IllegalArgumentException(
+                "Duração(mins) inválida!");
+                
         this.duracao = duracao;
     }
 
@@ -122,6 +134,13 @@ class Filme{
      */
     public Data getDataLancamento() {
         return dataLancamento;
+    }
+
+    /**
+     * @return the totalFilmes
+     */
+    public static int getTotalFilmes() {
+        return Filme.totalFilmes;
     }
 
     public void recuperarDados()
