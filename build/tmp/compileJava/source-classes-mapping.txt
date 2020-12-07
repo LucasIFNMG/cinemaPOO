@@ -1,26 +1,34 @@
-br/edu/ifnmg/cinema/entidade/Funcionario.java
- br.edu.ifnmg.cinema.entidade.Funcionario
 br/edu/ifnmg/cinema/entidade/SalaCinema.java
  br.edu.ifnmg.cinema.entidade.SalaCinema
-br/edu/ifnmg/cinema/entidade/Diretor.java
- br.edu.ifnmg.cinema.entidade.Diretor
+br/edu/ifnmg/cinema/entidade/Funcionario.java
+ br.edu.ifnmg.cinema.entidade.Funcionario
+br/edu/ifnmg/cinema/entidade/Vendedor.java
+ br.edu.ifnmg.cinema.entidade.Vendedor
+br/edu/ifnmg/cinema/entidade/Venda.java
+ br.edu.ifnmg.cinema.entidade.Venda
 br/edu/ifnmg/cinema/entidade/Cartaz.java
  br.edu.ifnmg.cinema.entidade.Cartaz
-br/edu/ifnmg/cinema/entidade/Ator.java
- br.edu.ifnmg.cinema.entidade.Ator
 br/edu/ifnmg/cinema/entidade/Formatando_Datas.java
- Formatando_Datas
+ br.edu.ifnmg.cinema.entidade.Formatando_Datas
 br/edu/ifnmg/cinema/entidade/Lancamento.java
  br.edu.ifnmg.cinema.entidade.Lancamento
 br/edu/ifnmg/cinema/MainCinema.java
  br.edu.ifnmg.cinema.MainCinema
+br/edu/ifnmg/cinema/entidade/Reserva.java
+ br.edu.ifnmg.cinema.entidade.Reserva
+br/edu/ifnmg/cinema/entidade/Administrador.java
+ br.edu.ifnmg.cinema.entidade.Administrador
 br/edu/ifnmg/cinema/entidade/Filme.java
  br.edu.ifnmg.cinema.entidade.Filme
+br/edu/ifnmg/cinema/entidade/ClienteRegistrado.java
+ br.edu.ifnmg.cinema.entidade.ClienteRegistrado
 br/edu/ifnmg/cinema/entidade/Data.java
- Data
+ br.edu.ifnmg.cinema.entidade.Data
 br/edu/ifnmg/cinema/entidade/Sessao.java
  br.edu.ifnmg.cinema.entidade.Sessao
 br/edu/ifnmg/cinema/entidade/Cliente.java
  br.edu.ifnmg.cinema.entidade.Cliente
 br/edu/ifnmg/cinema/entidade/Ingresso.java
  br.edu.ifnmg.cinema.entidade.Ingresso
+br/edu/ifnmg/cinema/entidade/ClienteVisitante.java
+ br.edu.ifnmg.cinema.entidade.ClienteVisitante
