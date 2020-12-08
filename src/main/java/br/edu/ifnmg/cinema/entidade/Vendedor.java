@@ -79,4 +79,28 @@ public class Vendedor extends Funcionario{
         return Funcionario.totalArrecadadoCinema;
     }
 
+    public boolean venderIngresso(Sessao sessao, int quantidade, int numeroAssento)
+    {
+        boolean reservouSucesso = sessao.reservarAssentos(quantidade, numeroAssento);
+
+        if(reservouSucesso)
+        {
+            // Incrementa o nº de Vendas do Funcionário e o nº de Vendas do Cinema
+            this.setNumVendasIngressos(this.getNumVendasIngressos() + quantidade);
+            Vendedor.setNumVendasCinema(Vendedor.getNumVendasCinema() + quantidade);
+
+            // Incrementa o valor($) arrecadado pelo Funcionário e pelo Cinema
+            BigDecimal valorVenda = sessao.getPreco().multiply(BigDecimal.valueOf(quantidade));
+            this.setTotalVendido(valorVenda.add(this.getTotalVendido()));
+            Vendedor.setTotalArrecadadoCinema(valorVenda.add(Vendedor.getTotalArrecadadoCinema()));
+            System.out.println("Ingresso(s) reservado(s) com sucesso!");
+            return true;
+        }
+        else
+        {
+            System.out.println("NÃO foi possível reservar o(s) ingresso(s)!");
+            return false;
+        }
+    }
+
 }

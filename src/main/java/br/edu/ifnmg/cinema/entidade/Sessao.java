@@ -4,6 +4,10 @@ import br.edu.ifnmg.cinema.entidade.Filme;
 
 import java.math.BigDecimal;
 import java.text.*;
+import java.util.ArrayList;
+
+import static br.edu.ifnmg.cinema.entidade.SalaCinema.ASSENTO_DISPONIVEL;
+import static br.edu.ifnmg.cinema.entidade.SalaCinema.ASSENTO_OCUPADO;
 
 public class Sessao{
     private Filme filme;
@@ -111,17 +115,31 @@ public class Sessao{
         return assentosDisponiveis;
     }
 
-    public boolean reservarAssentos(int quantidade)
+    public boolean reservarAssentos(int quantidade, int numeroAssento)
     {
+        ArrayList<Integer> listaAssentos;
+        listaAssentos = getSala().getListaAssentos();
+        listaAssentos.ensureCapacity(getSala().getCapacidadeAssentos());
+
+        boolean reservouSucesso = false;
+
         if(this.getAssentosDisponiveis() >= quantidade)
         {
-            this.assentosDisponiveis-= quantidade;
-            return true;
+            if (getSala().getStatusAssento(numeroAssento) == ASSENTO_DISPONIVEL) {
+                this.assentosDisponiveis -= quantidade;
+                System.out.println("Assento disponível! Foi reservado!");
+                reservouSucesso = true;
+            }
+            else{
+                System.out.println("Assento já está reservado!");
+            }
+
         }
-        else
-        {
-            return false;
+        else if (quantidade > listaAssentos.size() - 1){
+            System.out.printf("Capacidade insuficiente! %d < %d", listaAssentos.size() - 1, quantidade);
         }
+
+        return reservouSucesso;
     }
 
     public BigDecimal getPreco() {

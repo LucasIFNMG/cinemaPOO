@@ -56,6 +56,10 @@ public abstract class Funcionario{
         return id;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
 
     /**
      * @param salarioBase the salarioBase to set
@@ -91,35 +95,8 @@ public abstract class Funcionario{
         */
     }
 
-    public boolean autenticar(String senhaPesquisada) {
-        // TODO Verificar Senha
-        return true;
+    public boolean autenticar(String senha) {
+        return this.getSenha().equals(senha);
     }
-
-
-    /*
-    public boolean venderIngresso(Sessao sessao, int quantidade, int numeroAssento)
-    {
-        if(this.sessao.reservarAssentos(quantidade) == true)
-        {
-            // Incrementa o nº de Vendas do Funcionário e o nº de Vendas do Cinema
-            this.funcionario.setNumVendasIngressos(this.funcionario.getNumVendasIngressos() + quantidade);
-            Funcionario.setNumVendasCinema(Funcionario.getNumVendasCinema() + quantidade);
-
-            // Incrementa o valor($) arrecadado pelo Funcionário e pelo Cinema
-            BigDecimal valorVenda = this.getPreco().multiply(BigDecimal.valueOf(quantidade));
-            this.funcionario.setTotalVendido(valorVenda.add(this.funcionario.getTotalVendido()));
-            Funcionario.setTotalArrecadadoCinema(valorVenda.add(Funcionario.getTotalArrecadadoCinema()));
-            System.out.println("Ingresso(s) reservado(s) com sucesso!");
-            return true;
-        }
-        else
-        {
-            System.out.println("NÃO foi possível reservar o(s) ingresso(s)!");
-            return false;
-        }
-    }
-
-     */
 
 }
