@@ -1,17 +1,15 @@
 package br.edu.ifnmg.cinema.entidade;
 
-import java.math.BigDecimal;
-
 public class Vendedor extends Funcionario{
 
-    private BigDecimal totalVendido;
-    private BigDecimal totalComissao;
-    private BigDecimal porcentComissao = new BigDecimal("0.1");
+    private double totalVendido;
+    private double totalComissao;
+    private double porcentComissao = 0.1;
     private double comissao;
     private int numVendasIngressos = 0;
 
-    public Vendedor(String nome, String id, String cpf, BigDecimal salarioBase) {
-        super(nome, id, cpf, salarioBase);
+    public Vendedor(String nome, String id, String cpf, double salarioBase) {
+        super(nome, id, salarioBase);
     }
 
     /**
@@ -31,14 +29,14 @@ public class Vendedor extends Funcionario{
     /**
      * @param totalVendido the totalVendido to set
      */
-    public void setTotalVendido(BigDecimal totalVendido) {
+    public void setTotalVendido(double totalVendido) {
         this.totalVendido = totalVendido;
     }
 
     /**
      * @return the totalVendido
      */
-    public BigDecimal getTotalVendido() {
+    public double getTotalVendido() {
         return this.totalVendido;
     }
 
@@ -58,24 +56,24 @@ public class Vendedor extends Funcionario{
     /*
      * @return the comissao
      */
-    public BigDecimal getTotalComissao()
+    public double getTotalComissao()
     {
         // totalVendido = this.getTotalVendido();
-        this.totalComissao = this.getTotalVendido().multiply(porcentComissao);
+        this.totalComissao = getTotalVendido() * porcentComissao;
         return this.totalComissao;
     }
 
     /**
      * @param totalArrecadadoCinema the totalArrecadadoCinema to set
      */
-    public static void setTotalArrecadadoCinema(BigDecimal totalArrecadadoCinema) {
+    public static void setTotalArrecadadoCinema(double totalArrecadadoCinema) {
         Funcionario.totalArrecadadoCinema = totalArrecadadoCinema;
     }
 
     /**
      * @return the totalArrecadadoCinema
      */
-    public static BigDecimal getTotalArrecadadoCinema() {
+    public static double getTotalArrecadadoCinema() {
         return Funcionario.totalArrecadadoCinema;
     }
 
@@ -90,9 +88,9 @@ public class Vendedor extends Funcionario{
             Vendedor.setNumVendasCinema(Vendedor.getNumVendasCinema() + quantidade);
 
             // Incrementa o valor($) arrecadado pelo Funcionário e pelo Cinema
-            BigDecimal valorVenda = sessao.getPreco().multiply(BigDecimal.valueOf(quantidade));
-            this.setTotalVendido(valorVenda.add(this.getTotalVendido()));
-            Vendedor.setTotalArrecadadoCinema(valorVenda.add(Vendedor.getTotalArrecadadoCinema()));
+            double valorVenda = sessao.getPreco() * quantidade;
+            this.setTotalVendido(valorVenda + this.getTotalVendido());
+            Vendedor.setTotalArrecadadoCinema(valorVenda + Vendedor.getTotalArrecadadoCinema());
             System.out.println("Ingresso(s) reservado(s) com sucesso!");
             return true;
         }

@@ -5,14 +5,8 @@ public class ClienteVisitante extends Cliente{
         super(nome, documento, idade);
     }
 
-    public boolean registrar(){
-        //TODO Solicitar email, Senha
-        ClienteRegistrado novoClienteRegistrado = new ClienteRegistrado();
-        System.out.println("Cliente cadastrado com sucesso!");
-        boolean registrouSucesso = true;
-        if (!registrouSucesso) {
-            registrouSucesso = false;
-        }
-        return registrouSucesso;
+    public ClienteRegistrado registrar(String email, String senha){
+        int id = ClienteRegistrado.getTotalClientes();
+        return new ClienteRegistrado(id, nome, senha, email, documento, idade);
     }
 }

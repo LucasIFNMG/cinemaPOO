@@ -1,25 +1,26 @@
 package br.edu.ifnmg.cinema.entidade;
 
-import java.util.Scanner;
-
 public class ClienteRegistrado extends Cliente{
 
-    private String id;
+    private static int totalClientes = 20;
+    private int id;
     private String senha;
     private String cartaoCredito;
+    private String documento;
     private String email;
 
-    public ClienteRegistrado(String nome, String documento, int idade) {
+    public ClienteRegistrado(int id, String nome,String senha, String email, String documento, int idade) {
         super(nome, documento, idade);
+        ClienteRegistrado.totalClientes++;
+        this.id = totalClientes;
+        this.idade = idade;
     }
 
-    public ClienteRegistrado() {
-        super();
+    public static int getTotalClientes() {
+        return totalClientes;
     }
 
     public String getSenha() { return this.senha;}
-
-    public String getId() { return this.id;}
 
     public boolean autenticar(String senha) {
         return this.getSenha().equals(senha);
@@ -71,5 +72,9 @@ public class ClienteRegistrado extends Cliente{
         // Em caso de sucesso, retornar o id do ingresso
         Ingresso novoIngresso = new Ingresso();
         return novoIngresso.getId();
+    }
+
+    public int getId() {
+        return this.id;
     }
 }

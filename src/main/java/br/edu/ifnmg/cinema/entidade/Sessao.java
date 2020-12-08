@@ -1,13 +1,9 @@
 package br.edu.ifnmg.cinema.entidade;
 
-import br.edu.ifnmg.cinema.entidade.Filme;
-
-import java.math.BigDecimal;
 import java.text.*;
 import java.util.ArrayList;
 
 import static br.edu.ifnmg.cinema.entidade.SalaCinema.ASSENTO_DISPONIVEL;
-import static br.edu.ifnmg.cinema.entidade.SalaCinema.ASSENTO_OCUPADO;
 
 public class Sessao{
     private Filme filme;
@@ -17,7 +13,7 @@ public class Sessao{
     private int dia;
     private int horario;
     private int assentosDisponiveis;
-    private BigDecimal preco;
+    private double preco;
 
     public Sessao(Filme filme, String exibicao, String dimensao, SalaCinema sala, int dia, int horario)
     {
@@ -142,91 +138,93 @@ public class Sessao{
         return reservouSucesso;
     }
 
-    public BigDecimal getPreco() {
+    public double getPreco() {
 
+        // TODO: Criar uma "Tabela de Preços", com constantes.
+        // Ex: DOMINGO_3D = 30.00, DOMINGO_2D = 26.00...
         switch(this.dia){
             // 1: Domingo
             case 1:
                 if(this.dimensao == "3D")
                 {
-                    this.preco = new BigDecimal("30.00");
+                    this.preco = 30.00;
                     break;
                 }
                 else
                 {
-                    this.preco = new BigDecimal("26.00");
+                    this.preco = 26.00;
                     break;
                 }
             // 2: Segunda-feira
             case 2:
                 if(this.dimensao == "3D")
                 {
-                    this.preco = new BigDecimal("20.00");
+                    this.preco = 20.00;
                     break;
                 }
                 else
                 {
-                    this.preco = new BigDecimal("18.00");
+                    this.preco = 18.00;
                     break;
                 }
             // 3: Terça-feira
             case 3:
                 if(this.dimensao == "3D")
                 {
-                    this.preco = new BigDecimal("22.00");
+                    this.preco = 22.00;
                     break;
                 }
                 else
                 {
-                    this.preco = new BigDecimal("20.00");
+                    this.preco = 20.00;
                     break;
                 }
             // 4: Quarta-feira
             case 4:
                 if(this.dimensao == "3D")
                 {
-                    this.preco = new BigDecimal("20.00");
+                    this.preco = 20.00;
                     break;
                 }
                 else
                 {
-                    this.preco = new BigDecimal("18.00");
+                    this.preco = 18.00;
                     break;
                 }
             // 5: Quinta-feira
             case 5:
                 if(this.dimensao == "3D")
                 {
-                    this.preco = new BigDecimal("22.00");
+                    this.preco = 22.00;
                     break;
                 }
                 else
                 {
-                    this.preco = new BigDecimal("20.00");
+                    this.preco = 20.00;
                     break;
                 }
             // 6: Sexta-feira
             case 6:
                 if(this.dimensao == "3D")
                 {
-                    this.preco = new BigDecimal("22.00");
+                    this.preco = 22.00;
                     break;
                 }
                 else
                 {
-                    this.preco = new BigDecimal("20.00");
+                    this.preco = 20.00;
                     break;
                 }
             // 7: Sábado
             case 7:
                 if(this.dimensao == "3D")
                 {
-                    this.preco = new BigDecimal("30.00");
+                    this.preco = 30.00;
                     break;
                 }
                 else
                 {
-                    this.preco = new BigDecimal("26.00");
+                    this.preco = 26.00;
                     break;
                 }
         }

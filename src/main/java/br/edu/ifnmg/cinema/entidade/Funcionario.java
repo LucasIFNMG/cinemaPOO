@@ -1,21 +1,19 @@
 package br.edu.ifnmg.cinema.entidade;
 
-import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 public abstract class Funcionario{
 
     protected String nome;
     protected String id;
-    protected String cpf;
     protected String senha;
-    protected BigDecimal salarioBase;
+    protected double salarioBase;
 
     protected static int numVendasCinema = 0;
-    protected static BigDecimal totalArrecadadoCinema;
+    protected static double totalArrecadadoCinema;
     
 
-    public Funcionario(String nome, String id, String cpf, BigDecimal salarioBase)
+    public Funcionario(String nome, String id, double salarioBase)
     {
 
         /*
@@ -24,13 +22,12 @@ public abstract class Funcionario{
                 "ID inválido!");
         */
             // compareTo: retorna -1, 0 ou 1. -1: 1º parâmetro MENOR do que o 2º. 0: 1º == 2º. 1: 1º > 2º.
-        if(salarioBase.compareTo(BigDecimal.ZERO) == -1)
+        if(salarioBase == -1)
             throw new IllegalArgumentException(
                 "Salário-base deve ser >= 0! ");
 
         this.nome = nome;
         this.id = id;
-        this.cpf = cpf;
         this.salarioBase = salarioBase;
         // this.nivelAcesso = 0;
     }
@@ -40,13 +37,6 @@ public abstract class Funcionario{
      */
     public String getNome() {
         return nome;
-    }
-
-    /**
-     * @return the cpf
-     */
-    public String getCpf() {
-        return cpf;
     }
 
     /**
@@ -64,9 +54,9 @@ public abstract class Funcionario{
     /**
      * @param salarioBase the salarioBase to set
      */
-    public void setSalarioBase(BigDecimal salarioBase)
+    public void setSalarioBase(double salarioBase)
     {
-        if(salarioBase.compareTo(BigDecimal.ZERO) == -1)
+        if(salarioBase == -1)
             throw new IllegalArgumentException(
                 "Salário-base deve ser >= 0! ");
         

@@ -1,5 +1,8 @@
 package br.edu.ifnmg.cinema;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -10,12 +13,15 @@ import java.util.Scanner;
 
 import br.edu.ifnmg.cinema.entidade.*;
 
-class MainCinema{
+public class MainCinema{
+    
     private static HashMap <String, Funcionario> mapaFuncionarios = new HashMap<>();
     private static HashMap <String, Reserva> mapaReservas = new HashMap<>();
-    private static HashMap <String, ClienteRegistrado> mapaClientes = new HashMap<>();
+    private static HashMap <Integer, ClienteRegistrado> mapaClientes = new HashMap<>();
+    
+    public static void main(String[] args) throws IOException {
 
-    public static void main(String[] args) {
+        carregarDados();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -24,11 +30,10 @@ class MainCinema{
         System.out.println("2: Cliente");
         System.out.println("3: Cliente Visitante - Desejo me cadastrar");
 
-        int opcao = scanner.nextInt();
+        int opcaoUsuario = scanner.nextInt();
 
-
-
-        if (opcao == 1)
+        // Menu Funcionário
+        if (opcaoUsuario == 1)
         {
             Funcionario funcionario = autenticarFuncionario();
             int operacao = 0;
@@ -78,7 +83,8 @@ class MainCinema{
 
         }
 
-        if (opcao == 2){
+        // Menu Cliente Registrado
+        if (opcaoUsuario == 2){
             ClienteRegistrado clienteRegistrado = loginCliente();
             int operacao = 0;
 
@@ -96,10 +102,50 @@ class MainCinema{
             } while (operacao != 3);
         }
 
-        if (opcao == 3){
+        // Cadastrar Cliente
+        if (opcaoUsuario == 3){
             //TODO: Cadastrar Cliente (Nome, email, senha)
         }
 
+    }
+
+    private static void carregarDados() throws IOException {
+        carregarDadosClientesRegistrados();
+        /*
+        carregarDadosFuncionarios();
+        carregarDadosFilmes();
+        carregarDadosSessoes();
+        carregarDadosVendas();
+        carregarDadosReservas();
+
+         */
+    }
+
+    private static void carregarDadosClientesRegistrados() throws IOException {
+        System.out.println("Carregando dados de clientes...");
+
+        String arquivo = "dados/clientes.csv";
+        BufferedReader bufferedReader = null;
+        String separador = ",";
+
+        FileReader fileReader = new FileReader(arquivo);
+        bufferedReader = new BufferedReader(fileReader);
+
+        //Lê e ignora a primeira linha com cabeçalho das colunas
+        String linha = bufferedReader.readLine();
+
+        while ((linha = bufferedReader.readLine()) != null) {
+            String[] colunas = linha.split(separador);
+            int id = Integer.parseInt(colunas[0]);
+            String nome = colunas[1];
+            String senha = colunas[2];
+            String email = colunas[3];
+            String documento = colunas[4];
+            int idade = Integer.parseInt(colunas[5]);
+            ClienteRegistrado cliente = new ClienteRegistrado(id, nome, senha, email, documento, idade);
+            mapaClientes.put(id, cliente);
+        }
+        System.out.println("Dados de clientes pessoa física carregados.");
     }
 
 

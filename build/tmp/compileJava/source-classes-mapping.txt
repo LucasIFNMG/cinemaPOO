@@ -1,13 +1,11 @@
-br/edu/ifnmg/cinema/entidade/SalaCinema.java
- br.edu.ifnmg.cinema.entidade.SalaCinema
 br/edu/ifnmg/cinema/entidade/Funcionario.java
  br.edu.ifnmg.cinema.entidade.Funcionario
 br/edu/ifnmg/cinema/entidade/Vendedor.java
  br.edu.ifnmg.cinema.entidade.Vendedor
+br/edu/ifnmg/cinema/entidade/SalaCinema.java
+ br.edu.ifnmg.cinema.entidade.SalaCinema
 br/edu/ifnmg/cinema/entidade/Venda.java
  br.edu.ifnmg.cinema.entidade.Venda
-br/edu/ifnmg/cinema/entidade/Cartaz.java
- br.edu.ifnmg.cinema.entidade.Cartaz
 br/edu/ifnmg/cinema/entidade/Formatando_Datas.java
  br.edu.ifnmg.cinema.entidade.Formatando_Datas
 br/edu/ifnmg/cinema/entidade/Lancamento.java

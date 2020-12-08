@@ -1,7 +1,5 @@
 package br.edu.ifnmg.cinema.entidade;
 
-import java.math.BigDecimal;
-
 public class Ingresso
 {
     // No caso de Meia-entrada ou Reserva, deve-se pedir os dados do cliente
@@ -9,7 +7,7 @@ public class Ingresso
     private boolean isMeiaEntrada;
     private Funcionario funcionario;
     private Cliente cliente;
-    private BigDecimal preco;
+    private double preco;
     private String id;
     private int numeroAssento;
 
@@ -82,7 +80,7 @@ public class Ingresso
     /**
      * @return the preco
      */
-    public BigDecimal getPreco() {
+    public double getPreco() {
         return preco;
     }
 
@@ -128,7 +126,7 @@ public class Ingresso
         Funcionario.setNumVendasCinema(Funcionario.getNumVendasCinema() + quantidade);
 
         // Incrementa o valor($) arrecadado pelo Funcionário e pelo Cinema
-        BigDecimal valorVenda = this.getPreco().multiply(BigDecimal.valueOf(quantidade));
+        double valorVenda = this.getPreco().multiply(double.valueOf(quantidade));
         if(this.funcionario.getTotalVendido() != null)
         {
             valorVenda = valorVenda.add(this.funcionario.getTotalVendido());

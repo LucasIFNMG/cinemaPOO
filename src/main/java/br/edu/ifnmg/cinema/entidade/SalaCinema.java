@@ -9,8 +9,8 @@ public class SalaCinema{
     private final ArrayList<Integer> listaAssentos = new ArrayList<>();
 
 
-    static final int ASSENTO_OCUPADO = 0;
-    static final int ASSENTO_DISPONIVEL = 1;
+    static final int ASSENTO_DISPONIVEL = 0;
+    static final int ASSENTO_OCUPADO = 1;
 
     public ArrayList<Integer> getListaAssentos(){
         return this.listaAssentos;
