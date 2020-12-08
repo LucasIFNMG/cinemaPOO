@@ -14,6 +14,19 @@ public class ClienteRegistrado extends Cliente{
         ClienteRegistrado.totalClientes++;
         this.id = totalClientes;
         this.idade = idade;
+        this.senha = senha;
+        this.email = email;
+        this.documento = documento;
+    }
+
+    public ClienteRegistrado(String nome,String senha, String email, String documento, int idade) {
+        super(nome, documento, idade);
+        ClienteRegistrado.totalClientes++;
+        this.id = totalClientes;
+        this.idade = idade;
+        this.senha = senha;
+        this.email = email;
+        this.documento = documento;
     }
 
     public static int getTotalClientes() {

@@ -3,12 +3,7 @@ package br.edu.ifnmg.cinema;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.math.BigDecimal;
-import java.text.NumberFormat;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 import br.edu.ifnmg.cinema.entidade.*;
@@ -17,20 +12,28 @@ public class MainCinema{
     
     private static HashMap <String, Funcionario> mapaFuncionarios = new HashMap<>();
     private static HashMap <String, Reserva> mapaReservas = new HashMap<>();
-    private static HashMap <Integer, ClienteRegistrado> mapaClientes = new HashMap<>();
-    
+    private static HashMap <String, ClienteRegistrado> mapaClientes = new HashMap<>();
+    private static HashMap <Integer, Filme> mapaFilmes = new HashMap<>();
+    private static HashMap <Integer, Sessao> mapaSessoes = new HashMap<>();
+    private static HashMap <Integer, SalaCinema> mapaSalasCinema = new HashMap<>();
+
     public static void main(String[] args) throws IOException {
 
         carregarDados();
+        exibirMenus();
+    }
+
+    private static void exibirMenus() {
 
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("*************************************");
         System.out.println("Você é um Cliente ou Funcionário?");
         System.out.println("1: Funcionário");
         System.out.println("2: Cliente");
         System.out.println("3: Cliente Visitante - Desejo me cadastrar");
 
-        int opcaoUsuario = scanner.nextInt();
+        int opcaoUsuario = Integer.parseInt(scanner.nextLine());
 
         // Menu Funcionário
         if (opcaoUsuario == 1)
@@ -89,7 +92,6 @@ public class MainCinema{
             int operacao = 0;
 
             do {
-                // Menu VENDEDOR (nivelAcesso = PADRAO)
                 System.out.println("MENU CLIENTE");
                 System.out.println("Digite uma opção:");
                 System.out.println("1: Visualizar Sessões");
@@ -104,21 +106,31 @@ public class MainCinema{
 
         // Cadastrar Cliente
         if (opcaoUsuario == 3){
-            //TODO: Cadastrar Cliente (Nome, email, senha)
+            System.out.println("Digite o seu nome: ");
+            String nome = scanner.nextLine();
+            System.out.println("Digite o seu e-mail: ");
+            String email = scanner.nextLine();
+            System.out.println("Digite sua senha: ");
+            String senha = scanner.nextLine();
+            System.out.println("Digite o seu CPF: ");
+            String documento = scanner.nextLine();
+            //System.out.println("Digite o ano em que você nasceu: ");
+            System.out.println("Digite a sua idade:");
+            int idade = scanner.nextInt();
+            ClienteVisitante.registrar(nome, senha, email, documento, idade, mapaClientes);
+            System.out.println("Cliente cadastrado com sucesso!");
+            System.out.println("Faça o log-in utilizando o seu e-mail e senha.");
+            exibirMenus();
         }
-
     }
+
 
     private static void carregarDados() throws IOException {
         carregarDadosClientesRegistrados();
-        /*
         carregarDadosFuncionarios();
         carregarDadosFilmes();
         carregarDadosSessoes();
-        carregarDadosVendas();
-        carregarDadosReservas();
-
-         */
+        carregarDadosSalas();
     }
 
     private static void carregarDadosClientesRegistrados() throws IOException {
@@ -143,11 +155,124 @@ public class MainCinema{
             String documento = colunas[4];
             int idade = Integer.parseInt(colunas[5]);
             ClienteRegistrado cliente = new ClienteRegistrado(id, nome, senha, email, documento, idade);
-            mapaClientes.put(id, cliente);
+            mapaClientes.put(email, cliente);
         }
         System.out.println("Dados de clientes pessoa física carregados.");
     }
 
+    private static void carregarDadosFuncionarios() throws IOException {
+        System.out.println("Carregando dados de funcionários...");
+
+        String arquivo = "dados/funcionarios.csv";
+        BufferedReader bufferedReader = null;
+        String separador = ",";
+
+        FileReader fileReader = new FileReader(arquivo);
+        bufferedReader = new BufferedReader(fileReader);
+
+        //Lê e ignora a primeira linha com cabeçalho das colunas
+        String linha = bufferedReader.readLine();
+
+        while ((linha = bufferedReader.readLine()) != null) {
+            String[] colunas = linha.split(separador);
+            String id = colunas[0];
+            String nome = colunas[1];
+            String senha = colunas[2];
+            int nivelAcesso = Integer.parseInt(colunas[3]);
+            double salarioBase = Double.parseDouble(colunas[4]);
+            if (nivelAcesso == 0) {
+                Funcionario vendedor = new Vendedor(id, nome, senha, salarioBase, nivelAcesso);
+                mapaFuncionarios.put(id, vendedor);
+            } else{
+                Funcionario administrador = new Administrador(id, nome, senha, salarioBase, nivelAcesso);
+                mapaFuncionarios.put(id, administrador);
+            }
+        }
+        System.out.println("Dados de funcionários.");
+    }
+
+    private static void carregarDadosFilmes() throws IOException {
+        System.out.println("Carregando dados de filmes...");
+
+        String arquivo = "dados/movies.csv";
+        BufferedReader bufferedReader = null;
+        String separador = ",";
+
+        FileReader fileReader = new FileReader(arquivo);
+        bufferedReader = new BufferedReader(fileReader);
+
+        //Lê e ignora a primeira linha com cabeçalho das colunas
+        String linha = bufferedReader.readLine();
+
+        while ((linha = bufferedReader.readLine()) != null) {
+            String[] colunas = linha.split(separador);
+            int id = Integer.parseInt(colunas[0]);
+            String nome = colunas[1];
+            String genero = colunas[2];
+            int duracaoMins = Integer.parseInt(colunas[3]);
+            String censura = colunas[4];
+            String diretor = colunas[5];
+            Filme filme = new Filme(id, nome, genero, duracaoMins, censura, diretor);
+            mapaFilmes.put(id, filme);
+        }
+        System.out.println("Dados de Filmes carregados.");
+    }
+
+    private static void carregarDadosSessoes() throws IOException {
+        System.out.println("Carregando dados de sessoes...");
+
+        String arquivo = "dados/sessoes.csv";
+        BufferedReader bufferedReader = null;
+        String separador = ",";
+
+        FileReader fileReader = new FileReader(arquivo);
+        bufferedReader = new BufferedReader(fileReader);
+
+        //Lê e ignora a primeira linha com cabeçalho das colunas
+        String linha = bufferedReader.readLine();
+
+        while ((linha = bufferedReader.readLine()) != null) {
+            String[] colunas = linha.split(separador);
+            int idSessao = Integer.parseInt(colunas[0]);
+            int idFilme = Integer.parseInt(colunas[1]);
+            String exibicao = colunas[2];
+            String dimensao = colunas[3];
+            int dia = Integer.parseInt(colunas[4]);
+            String horario = colunas[4];
+            String numeroSala = colunas[5];
+
+            Filme filme = mapaFilmes.get(idFilme);
+            SalaCinema salaCinema = mapaSalasCinema.get(numeroSala);
+
+            Sessao sessao = new Sessao(idSessao, filme, exibicao, dimensao, salaCinema, dia, horario);
+            mapaSessoes.put(idSessao, sessao);
+        }
+        System.out.println("Dados das sessões carregados.");
+    }
+
+    private static void carregarDadosSalas() throws IOException {
+        System.out.println("Carregando dados das salas...");
+
+        String arquivo = "dados/salasCinema.csv";
+        BufferedReader bufferedReader = null;
+        String separador = ",";
+
+        FileReader fileReader = new FileReader(arquivo);
+        bufferedReader = new BufferedReader(fileReader);
+
+        //Lê e ignora a primeira linha com cabeçalho das colunas
+        String linha = bufferedReader.readLine();
+
+        while ((linha = bufferedReader.readLine()) != null) {
+            String[] colunas = linha.split(separador);
+            int numeroSala = Integer.parseInt(colunas[0]);
+            int capacidadeAssentos = Integer.parseInt(colunas[1]);
+
+            SalaCinema salaCinema = new SalaCinema(numeroSala, capacidadeAssentos);
+            mapaSalasCinema.put(numeroSala, salaCinema);
+        }
+        System.out.println("Dados das salas carregados.");
+    }
 
     private static Funcionario autenticarFuncionario() {
         Scanner scanner = new Scanner(System.in);
@@ -165,7 +290,7 @@ public class MainCinema{
 
             // Pesquisa no HashMap de Contas pelo numero pesquisado.
             if ((mapaFuncionarios.get(idPesquisado) != null)) {
-                funcionarioPesquisado = (Funcionario) mapaFuncionarios.get(idPesquisado);
+                funcionarioPesquisado = mapaFuncionarios.get(idPesquisado);
 
                 boolean autenticadoSucesso =
                         funcionarioPesquisado.autenticar(senhaPesquisada);
@@ -188,8 +313,7 @@ public class MainCinema{
     }
 
     public static ClienteRegistrado loginCliente(){
-        // Autenticar Cliente
-        // Ler os dados a partir do teclado
+
         Scanner scanner = new Scanner(System.in);
 
         boolean loginSucesso = false;
@@ -198,30 +322,29 @@ public class MainCinema{
 
         System.out.println("\nDigite o email:");
         //String emailPesquisado = "1";
-        String emailPesquisado = scanner.next();
+        String emailPesquisado = scanner.nextLine();
 
         System.out.println("Digite a senha:");
         //String senhaPesquisada = "6838";
-        String senhaPesquisada = scanner.next();
+        String senhaPesquisada = scanner.nextLine();
 
         // Pesquisa no HashMap de Clientes pelo email pesquisado.
         if ((mapaClientes.get(emailPesquisado) != null)) {
-            clientePesquisado = (ClienteRegistrado) mapaClientes.get(emailPesquisado);
+            clientePesquisado = mapaClientes.get(emailPesquisado);
 
             boolean autenticadoSucesso =
                     clientePesquisado.autenticar(senhaPesquisada);
 
             if(autenticadoSucesso){
-                System.out.printf("%s (%s) autenticado com sucesso!",
-                        clientePesquisado.getNome(),
-                        clientePesquisado.getId());
+                System.out.printf("%s autenticado com sucesso!",
+                        clientePesquisado.getNome());
+
             }else{
-                System.out.printf("%s (%s) não autenticado! Senha incorreta",
-                        clientePesquisado.getNome(),
-                        clientePesquisado.getId());
+                System.out.printf("Cliente não autenticado! Senha incorreta!%n");
+                return null;
             }
         }else {
-            System.out.println("cliente não encontrada!");
+            System.out.println("Cliente não encontrado!");
 
         }
         return clientePesquisado;
@@ -230,8 +353,7 @@ public class MainCinema{
 
     public Reserva consultarReserva(String codigoReserva){
         //TODO: Validar
-        Reserva reserva = (Reserva)mapaReservas.get(codigoReserva);
-        return reserva;
+        return mapaReservas.get(codigoReserva);
     }
 }
 

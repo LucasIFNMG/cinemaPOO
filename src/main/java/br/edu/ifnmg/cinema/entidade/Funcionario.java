@@ -8,12 +8,13 @@ public abstract class Funcionario{
     protected String id;
     protected String senha;
     protected double salarioBase;
+    protected int nivelAcesso;
 
     protected static int numVendasCinema = 0;
     protected static double totalArrecadadoCinema;
     
 
-    public Funcionario(String nome, String id, double salarioBase)
+    public Funcionario(String nome, String id, String senha, double salarioBase, int nivelAcesso)
     {
 
         /*

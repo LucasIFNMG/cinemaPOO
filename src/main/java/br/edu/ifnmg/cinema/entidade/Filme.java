@@ -3,31 +3,28 @@ package br.edu.ifnmg.cinema.entidade;
 import javax.xml.crypto.Data;
 
 public class Filme{
+    private int id;
     private String nome;
     private String genero;
-    private int duracao;
-    private String sinopse;
+    private int duracaoMinutos;
     private String censura;
     private String diretor;
-    private String atorPrincipal;
-    private Data dataLancamento;
     private static int totalFilmes = 0;
 
-    public Filme(String nome, String genero, int duracao, String sinopse, String censura)
+    public Filme(int id, String nome, String genero, int duracaoMinutos, String censura, String diretor)
     {
 
-        if(duracao <= 0)
+        if(duracaoMinutos <= 0)
             throw new IllegalArgumentException(
                 "Duração(mins) inválida!");
 
         this.nome = nome;
         this.genero = genero;
-        this.duracao = duracao;
-        this.sinopse = sinopse;
+        this.duracaoMinutos = duracaoMinutos;
         this.censura = censura;
-        this.atorPrincipal = atorPrincipal;
+        this.diretor = diretor;
         Filme.totalFilmes++;
-        
+        this.id = id;
     }
 
     /**
@@ -61,33 +58,19 @@ public class Filme{
     /**
      * @return the duracao
      */
-    public int getDuracao() {
-        return duracao;
+    public int getDuracaoMinutos() {
+        return duracaoMinutos;
     }
 
     /**
-     * @param duracao the duracao to set
+     * @param duracaoMinutos the duracao to set
      */
-    public void setDuracao(int duracao) {
-        if(duracao <= 0)
+    public void setDuracaoMinutos(int duracaoMinutos) {
+        if(duracaoMinutos <= 0)
             throw new IllegalArgumentException(
                 "Duração(mins) inválida!");
                 
-        this.duracao = duracao;
-    }
-
-    /**
-     * @return the sinopse
-     */
-    public String getSinopse() {
-        return sinopse;
-    }
-
-    /**
-     * @param sinopse the sinopse to set
-     */
-    public void setSinopse(String sinopse) {
-        this.sinopse = sinopse;
+        this.duracaoMinutos = duracaoMinutos;
     }
 
     /**
@@ -105,20 +88,6 @@ public class Filme{
     }
 
     /**
-     * @return the atorPrincipal
-     */
-    public String getAtorPrincipal() {
-        return atorPrincipal;
-    }
-
-    /**
-     * @param atorPrincipal the atorPrincipal to set
-     */
-    public void setAtorPrincipal(String atorPrincipal) {
-        this.atorPrincipal = atorPrincipal;
-    }
-
-    /**
      * @return the diretor
      */
     public String getDiretor() {
@@ -133,13 +102,6 @@ public class Filme{
     }
 
     /**
-     * @return the dataLancamento
-     */
-    public Data getDataLancamento() {
-        return dataLancamento;
-    }
-
-    /**
      * @return the totalFilmes
      */
     public static int getTotalFilmes() {
@@ -150,9 +112,9 @@ public class Filme{
     {
         System.out.println("Filme: " + this.getNome()
                         + "\nGênero: " + this.getGenero()
-                        + "\nDuração: " + this.getDuracao() + " mins"    
-                        + "\nSinopse: " + this.getSinopse()
-                        + "\nCensura: " + this.getCensura() );
+                        + "\nDuração: " + this.getDuracaoMinutos() + " mins"
+                        + "\nCensura: " + this.getCensura()
+                        + "\nDiretor: " + this.getDiretor());
     }
 
 }

@@ -8,8 +8,8 @@ public class Vendedor extends Funcionario{
     private double comissao;
     private int numVendasIngressos = 0;
 
-    public Vendedor(String nome, String id, String cpf, double salarioBase) {
-        super(nome, id, salarioBase);
+    public Vendedor(String nome, String id, String senha, double salarioBase, int nivelAcesso) {
+        super(nome, id, senha, salarioBase, nivelAcesso);
     }
 
     /**
