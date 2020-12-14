@@ -10,27 +10,15 @@ public abstract class Funcionario{
     protected double salarioBase;
     protected int nivelAcesso;
 
-    protected static int numVendasCinema = 0;
-    protected static double totalArrecadadoCinema;
-    
-
     public Funcionario(String nome, String id, String senha, double salarioBase, int nivelAcesso)
     {
 
-        /*
-        if (id.parseInt <= 0)
-            throw new IllegalArgumentException(
-                "ID inválido!");
-        */
-            // compareTo: retorna -1, 0 ou 1. -1: 1º parâmetro MENOR do que o 2º. 0: 1º == 2º. 1: 1º > 2º.
-        if(salarioBase == -1)
-            throw new IllegalArgumentException(
-                "Salário-base deve ser >= 0! ");
-
         this.nome = nome;
         this.id = id;
+        this.senha = senha;
         this.salarioBase = salarioBase;
-        // this.nivelAcesso = 0;
+        this.nivelAcesso = 0;
+
     }
 
     /**
@@ -49,19 +37,6 @@ public abstract class Funcionario{
 
     public String getSenha() {
         return senha;
-    }
-
-
-    /**
-     * @param salarioBase the salarioBase to set
-     */
-    public void setSalarioBase(double salarioBase)
-    {
-        if(salarioBase == -1)
-            throw new IllegalArgumentException(
-                "Salário-base deve ser >= 0! ");
-        
-        this.salarioBase = salarioBase;
     }
 
     public void recuperarDadosPagamentoFunc()

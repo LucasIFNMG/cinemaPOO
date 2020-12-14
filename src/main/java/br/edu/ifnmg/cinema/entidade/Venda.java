@@ -1,10 +1,19 @@
 package br.edu.ifnmg.cinema.entidade;
 
-import java.util.Date;
-
 public class Venda {
-    public String id;
-    public Date dataHora;
-    public int quantidade;
-    public double valor;
+    private int id;
+    private Ingresso ingresso;
+    private Vendedor vendedor;
+    public static int numeroVendasCinema = 0;
+
+
+    public Venda(Ingresso ingresso, Vendedor vendedor){
+        this.ingresso = ingresso;
+        this.vendedor = vendedor;
+        this.id = numeroVendasCinema + 1;
+
+        this.vendedor.incrementarNumeroVendasFuncionario();
+        numeroVendasCinema++;
+    }
+
 }

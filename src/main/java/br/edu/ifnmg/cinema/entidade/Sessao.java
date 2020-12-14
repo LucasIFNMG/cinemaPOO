@@ -21,12 +21,12 @@ public class Sessao{
     private static final double PRECO_FIM_SEMANA_3D = 30.00;
 
     private int id;
-    private Filme filme;
-    private String exibicao;
-    private String dimensao;
-    private SalaCinema sala;
-    private int dia;
-    private String horario;
+    private final Filme filme;
+    private final String exibicao;
+    private final String dimensao;
+    private final SalaCinema sala;
+    private final int dia;
+    private final String horario;
 
     public Sessao(int id, Filme filme, String exibicao, String dimensao, SalaCinema sala, int dia, String horario)
     {
@@ -39,18 +39,8 @@ public class Sessao{
 
     }
 
-    /**
-     * @return the filme
-     */
     public Filme getFilme() {
         return filme;
-    }
-
-    /**
-     * @param filme the filme to set
-     */
-    public void setFilme(Filme filme) {
-        this.filme = filme;
     }
 
     public String getExibicao()
@@ -58,33 +48,13 @@ public class Sessao{
         return this.exibicao;
     }
 
-    public void setIsDublado(String exibicao)
-    {
-        this.exibicao = exibicao;
-    }
-
     public String getDimensao()
     {
         return this.dimensao;
     }
 
-    public void setDimensao(String dimensao)
-    {
-        this.dimensao = dimensao;
-    }
-
-    /**
-     * @return the sala
-     */
     public SalaCinema getSala() {
         return sala;
-    }
-
-    /**
-     * @param sala the sala to set
-     */
-    public void setSala(SalaCinema sala) {
-        this.sala = sala;
     }
 
     /**
@@ -96,25 +66,10 @@ public class Sessao{
     }
 
     /**
-     * @param dia the dia to set
-     */
-    public void setDia(int dia) {
-        this.dia = dia;
-    }
-
-    /**
      * @return the horario
      */
     public String getHorario() {
         return horario;
-    }
-
-    /**
-     * @param horario the horario to set
-     * TODO: Verificar os horários já ocupados, no caso de adicionar novos filmes em Cartaz
-     */
-    public void setHorario(String horario) {
-        this.horario = horario;
     }
 
     public boolean reservarAssentos(int quantidade, int numeroAssento)
@@ -179,15 +134,19 @@ public class Sessao{
 
     public void recuperarDadosSessao()
     {
-        NumberFormat df = NumberFormat.getCurrencyInstance();
-        
+
         System.out.println("Filme: " +this.filme.getNome()
                         + "\nExibição: " + this.getExibicao()
                         + "\nDimensão: " + this.getDimensao() 
                         + "\nDia: " + this.getDia()
                         + "\nHorário: " + this.getHorario()
-                        + "\nPreço: " + df.format(this.getPreco()) 
+                        + "\nPreço: " + this.getPreco()
                         + "\nSala: " + this.sala.getNumeroSala() );
+    }
+
+    public void imprimirFilmeHorarioSessao(){
+        System.out.println("Filme: " +this.filme.getNome()
+                + "\nHorário: " + this.getHorario());
     }
 
 }

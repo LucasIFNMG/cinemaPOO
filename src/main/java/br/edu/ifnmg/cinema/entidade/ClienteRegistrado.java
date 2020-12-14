@@ -29,10 +29,6 @@ public class ClienteRegistrado extends Cliente{
         this.documento = documento;
     }
 
-    public static int getTotalClientes() {
-        return totalClientes;
-    }
-
     public String getSenha() { return this.senha;}
 
     public boolean autenticar(String senha) {
@@ -81,13 +77,13 @@ public class ClienteRegistrado extends Cliente{
 
     }
 */
+
+    // TODO
+    /*
     public String reservarSessao(Sessao sessao, int quantidade, int numeroAssento){
         // Em caso de sucesso, retornar o id do ingresso
-        Ingresso novoIngresso = new Ingresso();
-        return novoIngresso.getId();
+        // Ingresso novoIngresso = new Ingresso();
+        // return novoIngresso.getId();
     }
-
-    public int getId() {
-        return this.id;
-    }
+    */
 }
