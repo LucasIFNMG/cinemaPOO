@@ -1,8 +1,6 @@
 package br.edu.ifnmg.cinema.entidade;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
 
 public class SalaCinema{
 
@@ -15,16 +13,10 @@ public class SalaCinema{
 
     public SalaCinema(int numeroSala, int capacidadeAssentos)
     {
-        if(numeroSala <= 0)
-            throw new IllegalArgumentException(
-                "Nº da Sala deve ser > 0 !");
-
-        if(capacidadeAssentos <= 0)
-            throw new IllegalArgumentException(
-                "Nº de Assentos deve ser > 0!");
-        
         this.numeroSala = numeroSala;
         this.capacidadeAssentos = capacidadeAssentos;
+        this.listaAssentos.ensureCapacity(capacidadeAssentos);
+        setTodosAssentosDisponiveis();
     }
 
     public ArrayList<Integer> getListaAssentos(){
@@ -35,8 +27,11 @@ public class SalaCinema{
         return this.numeroSala;
     }
 
-    public void setListaAssentos(ArrayList<Integer> listaAssentos) {
-        this.listaAssentos = listaAssentos;
+    public void setTodosAssentosDisponiveis() {
+
+        for (int i = 0; i < this.capacidadeAssentos; i++){
+            listaAssentos.add(ASSENTO_DISPONIVEL);
+        }
     }
 
     public int getCapacidadeAssentos() {
@@ -45,10 +40,6 @@ public class SalaCinema{
 
     public int getStatusAssento(int numeroAssento){
         return listaAssentos.get(numeroAssento);
-    }
-
-    public void setStatusAssento(int numeroAssento, int statusAssento){
-        listaAssentos.set(numeroAssento,statusAssento);
     }
 
     public void reservarAssento(int numeroAssento){
@@ -62,17 +53,9 @@ public class SalaCinema{
     }
 
     public boolean isSalaLotada(){
-        // Getting ListIterator
-        ListIterator<Integer> intIterator = listaAssentos.listIterator();
 
-        /* Traversing elements
-        while(intIterator.hasNext()){
-            System.out.println(intIterator.next());
-        }
-         */
-        // Enhanced for loop creates Internal Iterator here.
-        for(Integer statusAssento : listaAssentos){
-            if(statusAssento == ASSENTO_DISPONIVEL){
+        for (Integer assento : listaAssentos){
+            if (assento == ASSENTO_DISPONIVEL){
                 return false;
             }
         }
@@ -80,13 +63,16 @@ public class SalaCinema{
     }
 
     public void imprimirAssentosDisponiveis(){
-        //ArrayList<Integer> listaAssentos = getListaAssentos();
-        for(Integer assento : listaAssentos){
-            if(assento == ASSENTO_DISPONIVEL){
-                System.out.printf("%d ", assento);
+
+        for (int i = 0; i < listaAssentos.size(); i++)
+        {
+            int assento = listaAssentos.get(i);
+            if (assento == ASSENTO_DISPONIVEL){
+                System.out.printf("%d ", i + 1);
             }
+
         }
 
-
+        System.out.println();
     }
 }

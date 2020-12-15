@@ -1,17 +1,15 @@
 package br.edu.ifnmg.cinema.entidade;
 
-import javax.xml.crypto.Data;
-
 public class Filme{
-    private int id;
-    private String nome;
-    private String genero;
+    private final int id;
+    private final String nome;
+    private final String genero;
     private int duracaoMinutos;
-    private String censura;
-    private String diretor;
+    private final String censura;
+    private final String diretor;
     private static int totalFilmes = 0;
 
-    public Filme(int id, String nome, String genero, int duracaoMinutos, String censura, String diretor)
+    public Filme(String nome, String genero, int duracaoMinutos, String censura, String diretor)
     {
 
         if(duracaoMinutos <= 0)
@@ -24,47 +22,25 @@ public class Filme{
         this.censura = censura;
         this.diretor = diretor;
         Filme.totalFilmes++;
-        this.id = id;
+        this.id = totalFilmes;
     }
 
-    /**
-     * @return the nome
-     */
+    public int getId() {
+        return id;
+    }
+
     public String getNome() {
         return nome;
     }
 
-    /**
-     * @param nome the nome to set
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    /**
-     * @return the genero
-     */
     public String getGenero() {
         return genero;
     }
 
-    /**
-     * @param genero the genero to set
-     */
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
-    /**
-     * @return the duracao
-     */
     public int getDuracaoMinutos() {
         return duracaoMinutos;
     }
 
-    /**
-     * @param duracaoMinutos the duracao to set
-     */
     public void setDuracaoMinutos(int duracaoMinutos) {
         if(duracaoMinutos <= 0)
             throw new IllegalArgumentException(
@@ -73,39 +49,12 @@ public class Filme{
         this.duracaoMinutos = duracaoMinutos;
     }
 
-    /**
-     * @return the censura
-     */
     public String getCensura() {
         return censura;
     }
 
-    /**
-     * @param censura the censura to set
-     */
-    public void setCensura(String censura) {
-        this.censura = censura;
-    }
-
-    /**
-     * @return the diretor
-     */
     public String getDiretor() {
         return diretor;
-    }
-
-    /**
-     * @param diretor the diretor to set
-     */
-    public void setDiretor(String diretor) {
-        this.diretor = diretor;
-    }
-
-    /**
-     * @return the totalFilmes
-     */
-    public static int getTotalFilmes() {
-        return Filme.totalFilmes;
     }
 
     public void recuperarDados()

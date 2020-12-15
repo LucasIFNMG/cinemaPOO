@@ -2,12 +2,30 @@ package br.edu.ifnmg.cinema.entidade;
 
 import java.util.Date;
 
-public class Reserva {
+public class Reserva extends Venda{
 
-    private String id;
+    private final String id;
     private Date dataHora;
-    private int quantidade;
-    private int numeroAssento;
-    private double valor;
-    private boolean isMeiaEntrada;
+    private final ClienteRegistrado clienteRegistrado;
+    private int totalReservas = 0;
+
+    public Reserva(Ingresso ingresso, ClienteRegistrado clienteRegistrado) {
+        super(ingresso);
+        this.ingresso = ingresso;
+        this.clienteRegistrado = clienteRegistrado;
+        totalReservas++;
+        this.id = getCodigoReserva();
+    }
+
+    public String getCodigoReserva() {
+        return totalReservas + this.clienteRegistrado.getDocumento();
+    }
+
+    public ClienteRegistrado getClienteRegistrado() {
+        return clienteRegistrado;
+    }
+
+    public Ingresso getIngresso(){
+        return ingresso;
+    }
 }

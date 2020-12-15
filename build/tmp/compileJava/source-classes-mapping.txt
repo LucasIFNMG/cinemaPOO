@@ -1,9 +1,15 @@
 br/edu/ifnmg/cinema/entidade/Funcionario.java
  br.edu.ifnmg.cinema.entidade.Funcionario
+br/edu/ifnmg/cinema/entidade/Questao6.java
+ br.edu.ifnmg.cinema.entidade.Questao6
 br/edu/ifnmg/cinema/entidade/Vendedor.java
  br.edu.ifnmg.cinema.entidade.Vendedor
 br/edu/ifnmg/cinema/entidade/SalaCinema.java
  br.edu.ifnmg.cinema.entidade.SalaCinema
+br/edu/ifnmg/cinema/entidade/Stack.java
+ br.edu.ifnmg.cinema.entidade.Stack
+br/edu/ifnmg/cinema/entidade/Math.java
+ br.edu.ifnmg.cinema.entidade.Math
 br/edu/ifnmg/cinema/entidade/Venda.java
  br.edu.ifnmg.cinema.entidade.Venda
 br/edu/ifnmg/cinema/entidade/Formatando_Datas.java
@@ -16,10 +22,10 @@ br/edu/ifnmg/cinema/entidade/Reserva.java
  br.edu.ifnmg.cinema.entidade.Reserva
 br/edu/ifnmg/cinema/entidade/Administrador.java
  br.edu.ifnmg.cinema.entidade.Administrador
-br/edu/ifnmg/cinema/entidade/Filme.java
- br.edu.ifnmg.cinema.entidade.Filme
 br/edu/ifnmg/cinema/entidade/ClienteRegistrado.java
  br.edu.ifnmg.cinema.entidade.ClienteRegistrado
+br/edu/ifnmg/cinema/entidade/Filme.java
+ br.edu.ifnmg.cinema.entidade.Filme
 br/edu/ifnmg/cinema/entidade/Data.java
  br.edu.ifnmg.cinema.entidade.Data
 br/edu/ifnmg/cinema/entidade/Sessao.java

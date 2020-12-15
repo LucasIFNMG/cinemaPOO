@@ -12,11 +12,14 @@ import br.edu.ifnmg.cinema.entidade.*;
 public class MainCinema{
     
     private static final HashMap <String, Funcionario> mapaFuncionarios = new HashMap<>();
-    private static final HashMap <String, Reserva> mapaReservas = new HashMap<>();
+    private static final HashMap <Integer, Reserva> mapaReservas = new HashMap<>();
     private static final HashMap <String, ClienteRegistrado> mapaClientes = new HashMap<>();
     private static final HashMap <Integer, Filme> mapaFilmes = new HashMap<>();
     private static final HashMap <Integer, Sessao> mapaSessoes = new HashMap<>();
     private static final HashMap <Integer, SalaCinema> mapaSalasCinema = new HashMap<>();
+    private static final HashMap <Integer, Venda> mapaVendas = new HashMap<>();
+
+
 
     public static void main(String[] args) throws IOException {
 
@@ -49,23 +52,18 @@ public class MainCinema{
                 do {
                     System.out.println("MENU ADMIN");
                     System.out.println("Digite uma opção:");
-                    //System.out.println("1: Vender Ingresso");
-                    System.out.println("2: Imprimir Ingresso");
-                    System.out.println("3: Consultar Reserva");
-                    System.out.println("4: Criar Sessão");
-                    System.out.println("5: Editar Sessão");
-                    System.out.println("6: Cadastrar Filme");
-                    System.out.println("7: Consultar Total de Vendas");
-                    System.out.println("8: Consultar Salário de Funcionários:");
-                    System.out.println("9: Sair");
+                    System.out.println("1: Criar Sessão");
+                    System.out.println("2: Editar Sessão");
+                    System.out.println("3: Cadastrar Filme");
+                    System.out.println("4: Consultar Total de Vendas");
+                    System.out.println("5: Consultar Salário de Funcionários:");
+                    System.out.println("6: Sair");
                     System.out.println("Digite uma opção:");
 
                     operacao = Integer.parseInt(scanner.nextLine());
 
                     switch (operacao) {
-                        case 1:
-                            venderIngresso((Vendedor) funcionario);
-                            break;
+
 
                     }
 
@@ -79,18 +77,28 @@ public class MainCinema{
                     System.out.println("MENU VENDEDOR");
                     System.out.println("Digite uma opção:");
                     System.out.println("1: Vender Ingresso");
-                    System.out.println("2: Imprimir Ingresso");
-                    System.out.println("3: Consultar Reserva");
-                    System.out.println("4: Sair");
+                    System.out.println("2: Consultar Reserva");
+                    System.out.println("3: Sair");
 
                     operacao = Integer.parseInt(scanner.nextLine());
 
                     switch(operacao){
                         case 1:
-                            venderIngresso( (Vendedor) funcionario);
+                            venderIngresso((Vendedor)funcionario);
+                            break;
+                        case 2:
+                            consultarReserva();
+                            break;
+                        case 3:
+                            System.out.println("Encerrando...");
+                            break;
+                        default:
+                            System.out.println("Opção inválida!");
+                            break;
+
                     }
 
-                } while (operacao != 4);
+                } while (operacao != 3);
             }
 
         }
@@ -108,6 +116,23 @@ public class MainCinema{
                 System.out.println("3: Sair");
 
                 operacao = Integer.parseInt(scanner.nextLine());
+
+                switch(operacao){
+                    case 1:
+                        assert clienteRegistrado != null;
+                        visualizarSessoes();
+                        break;
+                    case 2:
+                        reservarSessao(clienteRegistrado);
+                        break;
+                    case 3:
+                        System.out.println("Encerrando...");
+                        break;
+                    default:
+                        System.out.println("Opção inválida!");
+                        break;
+
+                }
 
             } while (operacao != 3);
         }
@@ -132,14 +157,105 @@ public class MainCinema{
         }
     }
 
+    private static void visualizarSessoes() {
+        for (Map.Entry<Integer, Sessao> entry : mapaSessoes.entrySet()) {
+            entry.getValue().imprimirFilmeDiaHorarioSessao();
+        }
+    }
+
+    private static void reservarSessao(ClienteRegistrado clienteRegistrado) {
+        // TODO: Reserva Herdar de Venda
+        Scanner scanner = new Scanner(System.in);
+        for (Map.Entry<Integer, Sessao> entry : mapaSessoes.entrySet()) {
+            System.out.printf("%d - ", entry.getKey());
+            entry.getValue().imprimirFilmeDiaHorarioSessao();
+        }
+        System.out.println("Informe a sessão:");
+        int opcaoSessao = Integer.parseInt(scanner.nextLine());
+        Sessao sessaoEscolhida = mapaSessoes.get(opcaoSessao);
+        SalaCinema salaSessaoEscolhida = sessaoEscolhida.getSala();
+
+        int opcaoAssento;
+        int opcaoEntrada;
+
+        if (salaSessaoEscolhida.isSalaLotada()){
+            System.out.println("Sessão lotada!");
+        }else{
+            System.out.println("Escolha o nº do assento:");
+            salaSessaoEscolhida.imprimirAssentosDisponiveis();
+            // TODO: EXCEPTION EM OPCAO
+            opcaoAssento = Integer.parseInt(scanner.nextLine()) - 1;
+            salaSessaoEscolhida.reservarAssento(opcaoAssento);
+            System.out.println("Assento Reservado.");
+
+            System.out.println("Meia Entrada ou Inteira?");
+            System.out.println("1 - Meia Entrada");
+            System.out.println("2 - Inteira");
+            // TODO: EXCEPTION EM OPCAO
+            opcaoEntrada = Integer.parseInt(scanner.nextLine());
+
+            if (opcaoEntrada == 1){
+                System.out.printf("Atenção: o direito da meia-entrada é intransferível.%n" +
+                        "Você deve apresentar o seu documento quando for imprimir o seu ingresso. ");
+                Ingresso ingresso = new Ingresso(sessaoEscolhida, true, opcaoAssento);
+                Reserva reserva = new Reserva(ingresso, clienteRegistrado);
+                mapaReservas.put(reserva.getId(), reserva);
+                System.out.printf("Código da Reserva: %s%n", reserva.getCodigoReserva());
+                System.out.printf("Preço = R$ %.2f%n", ingresso.getPreco());
+
+            } else {
+                Ingresso ingresso = new Ingresso(sessaoEscolhida, false, opcaoAssento);
+                Reserva reserva = new Reserva(ingresso, clienteRegistrado);
+                mapaReservas.put(reserva.getId(), reserva);
+                System.out.printf("Código da Reserva: %s%n", reserva.getCodigoReserva());
+                System.out.printf("Preço = R$ %.2f%n", ingresso.getPreco());
+
+            }
+
+            /* TODO: debitarCartão
+            System.out.println("Informe o nº do cartão de crédito:");
+            String numeroCartao = scanner.nextLine();
+            System.out.println("Informe o CVC: ");
+            String cvcCartao = scanner.nextLine();
+            */
+
+            System.out.println("Reserva realizada com sucesso!");
+            System.out.println("Apresente o Código da Reserva junto com o seu documento para imprimir o ingresso.");
+        }
+    }
+
+    private static void consultarReserva() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Informe o ID da reserva:");
+        int idReserva = Integer.parseInt(scanner.nextLine());
+        // TODO: Exception na busca
+        Reserva reservaPesquisada = mapaReservas.get(idReserva);
+        int idSessaoReservada = reservaPesquisada.getIngresso().getSessao().getId();
+        String filmeSessaoReservada = reservaPesquisada.getIngresso().getSessao().getFilme().getNome();
+        String nomeClienteReservou = reservaPesquisada.getClienteRegistrado().getNome();
+        String documentoClienteReservou = reservaPesquisada.getClienteRegistrado().getDocumento();
+
+        System.out.printf("Sessão: %d" + "Filme: %s" + "Cliente: %s" + "Documento: %s",
+                idSessaoReservada, filmeSessaoReservada, nomeClienteReservou, documentoClienteReservou);
+
+        Ingresso ingresso = reservaPesquisada.getIngresso();
+        ingresso.imprimirIngresso();
+
+        System.out.println("Deseja remover a reserva do sistema?");
+        System.out.println("1 - Sim");
+        System.out.println("2 - Não");
+        int opcaoRemover = Integer.parseInt(scanner.nextLine());
+
+        if(opcaoRemover == 1)
+            mapaReservas.remove(idReserva);
+
+    }
+
     private static void venderIngresso(Vendedor vendedor) {
 
         Scanner scanner = new Scanner(System.in);
+        visualizarSessoes();
         System.out.println("Informe a sessão:");
-        for (Map.Entry<Integer, Sessao> entry : mapaSessoes.entrySet()) {
-                entry.getValue().imprimirFilmeHorarioSessao();
-        }
-
         int opcaoSessao = Integer.parseInt(scanner.nextLine());
         Sessao sessaoEscolhida = mapaSessoes.get(opcaoSessao);
         SalaCinema salaSessaoEscolhida = sessaoEscolhida.getSala();
@@ -167,17 +283,21 @@ public class MainCinema{
                 System.out.println("Conferir documento!");
                 Ingresso ingresso = new Ingresso(sessaoEscolhida, true, opcaoAssento);
                 Venda venda = new Venda(ingresso, vendedor);
+                System.out.printf("Preço = R$ %.2f%n", ingresso.getPreco());
+                mapaVendas.put(venda.getId(), venda);
+
             } else {
                 Ingresso ingresso = new Ingresso(sessaoEscolhida, false, opcaoAssento);
                 Venda venda = new Venda(ingresso, vendedor);
+                mapaVendas.put(venda.getId(), venda);
+                System.out.printf("Preço = R$ %.2f%n", ingresso.getPreco());
+
             }
 
-            System.out.printf("Preço = R$ %.2f%n", sessaoEscolhida.getPreco());
             System.out.println("Venda realizada com sucesso!");
         }
 
     }
-
 
     private static void carregarDados() throws IOException {
         carregarDadosClientesRegistrados();
@@ -191,7 +311,7 @@ public class MainCinema{
         System.out.println("Carregando dados de clientes...");
 
         String arquivo = "dados/clientes.csv";
-        BufferedReader bufferedReader = null;
+        BufferedReader bufferedReader;
         String separador = ",";
 
         FileReader fileReader = new FileReader(arquivo);
@@ -218,7 +338,7 @@ public class MainCinema{
         System.out.println("Carregando dados de funcionários...");
 
         String arquivo = "dados/funcionarios.csv";
-        BufferedReader bufferedReader = null;
+        BufferedReader bufferedReader;
         String separador = ",";
 
         FileReader fileReader = new FileReader(arquivo);
@@ -249,7 +369,7 @@ public class MainCinema{
         System.out.println("Carregando dados de filmes...");
 
         String arquivo = "dados/movies.csv";
-        BufferedReader bufferedReader = null;
+        BufferedReader bufferedReader;
         String separador = ",";
 
         FileReader fileReader = new FileReader(arquivo);
@@ -260,14 +380,13 @@ public class MainCinema{
 
         while ((linha = bufferedReader.readLine()) != null) {
             String[] colunas = linha.split(separador);
-            int id = Integer.parseInt(colunas[0]);
             String nome = colunas[1];
             String genero = colunas[2];
             int duracaoMins = Integer.parseInt(colunas[3]);
             String censura = colunas[4];
             String diretor = colunas[5];
-            Filme filme = new Filme(id, nome, genero, duracaoMins, censura, diretor);
-            mapaFilmes.put(id, filme);
+            Filme filme = new Filme(nome, genero, duracaoMins, censura, diretor);
+            mapaFilmes.put(filme.getId(), filme);
         }
         System.out.println("Dados de Filmes carregados.");
     }
@@ -276,7 +395,7 @@ public class MainCinema{
         System.out.println("Carregando dados de sessoes...");
 
         String arquivo = "dados/sessoes.csv";
-        BufferedReader bufferedReader = null;
+        BufferedReader bufferedReader;
         String separador = ",";
 
         FileReader fileReader = new FileReader(arquivo);
@@ -308,7 +427,7 @@ public class MainCinema{
         System.out.println("Carregando dados das salas...");
 
         String arquivo = "dados/salasCinema.csv";
-        BufferedReader bufferedReader = null;
+        BufferedReader bufferedReader;
         String separador = ",";
 
         FileReader fileReader = new FileReader(arquivo);
@@ -370,45 +489,40 @@ public class MainCinema{
 
         Scanner scanner = new Scanner(System.in);
 
-        boolean loginSucesso = false;
-
         ClienteRegistrado clientePesquisado = null;
 
-        System.out.println("\nDigite o email:");
-        //String emailPesquisado = "1";
-        String emailPesquisado = scanner.nextLine();
+        do {
+            System.out.println("\nDigite o email:");
+            //String emailPesquisado = "1";
+            String emailPesquisado = scanner.nextLine();
 
-        System.out.println("Digite a senha:");
-        //String senhaPesquisada = "6838";
-        String senhaPesquisada = scanner.nextLine();
+            System.out.println("Digite a senha:");
+            //String senhaPesquisada = "6838";
+            String senhaPesquisada = scanner.nextLine();
 
-        // Pesquisa no HashMap de Clientes pelo email pesquisado.
-        if ((mapaClientes.get(emailPesquisado) != null)) {
-            clientePesquisado = mapaClientes.get(emailPesquisado);
+            // Pesquisa no HashMap de Clientes pelo email pesquisado.
+            // TODO: Exception (NULL)
+            if ((mapaClientes.get(emailPesquisado) != null)) {
+                clientePesquisado = mapaClientes.get(emailPesquisado);
 
-            boolean autenticadoSucesso =
-                    clientePesquisado.autenticar(senhaPesquisada);
+                boolean autenticadoSucesso =
+                        clientePesquisado.autenticar(senhaPesquisada);
 
-            if(autenticadoSucesso){
-                System.out.printf("%s autenticado com sucesso!",
-                        clientePesquisado.getNome());
+                if (autenticadoSucesso) {
+                    System.out.printf("%s autenticado com sucesso!%n",
+                            clientePesquisado.getNome());
 
-            }else{
-                System.out.printf("Cliente não autenticado! Senha incorreta!%n");
-                return null;
+                } else {
+                    System.out.printf("Cliente não autenticado! Senha incorreta!%n");
+                    return null;
+                }
+            } else {
+                System.out.println("Cliente não encontrado!");
             }
-        }else {
-            System.out.println("Cliente não encontrado!");
-
-        }
+        } while (clientePesquisado == null);
         return clientePesquisado;
-
     }
 
-    public Reserva consultarReserva(String codigoReserva){
-        //TODO: Validar
-        return mapaReservas.get(codigoReserva);
-    }
 }
 
 

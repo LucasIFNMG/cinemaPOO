@@ -35,6 +35,10 @@ public class ClienteRegistrado extends Cliente{
         return this.getSenha().equals(senha);
     }
 
+    public String getDocumento() {
+        return documento;
+    }
+
     /*
     public boolean login(){
         // Autenticar Cliente

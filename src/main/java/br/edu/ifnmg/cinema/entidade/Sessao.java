@@ -39,6 +39,10 @@ public class Sessao{
 
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Filme getFilme() {
         return filme;
     }
@@ -65,9 +69,6 @@ public class Sessao{
         return dia;
     }
 
-    /**
-     * @return the horario
-     */
     public String getHorario() {
         return horario;
     }
@@ -129,12 +130,11 @@ public class Sessao{
     public void recuperarDadosFilmeSessao()   
     {
         this.filme.recuperarDados();
-        this.recuperarDadosSessao();
+        this.imprimirDadosSessao();
     }
 
-    public void recuperarDadosSessao()
+    public void imprimirDadosSessao()
     {
-
         System.out.println("Filme: " +this.filme.getNome()
                         + "\nExibição: " + this.getExibicao()
                         + "\nDimensão: " + this.getDimensao() 
@@ -144,8 +144,9 @@ public class Sessao{
                         + "\nSala: " + this.sala.getNumeroSala() );
     }
 
-    public void imprimirFilmeHorarioSessao(){
+    public void imprimirFilmeDiaHorarioSessao(){
         System.out.println("Filme: " +this.filme.getNome()
+                + "\nDia: " + this.getDia()
                 + "\nHorário: " + this.getHorario());
     }
 
