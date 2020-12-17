@@ -80,6 +80,7 @@ public class MainCinema{
                                 editarSessao();
                                 break;
                             case 3:
+                                cadastrarFilme();
                                 break;
                             case 4:
                                 break;
@@ -256,6 +257,31 @@ public class MainCinema{
         // TODO: Teste unitário
         mapaSessoes.put(novaSessao.getId(), novaSessao);
         System.out.println("Sessão cadastrada com sucesso!");
+    }
+
+    // TODO: Teste unitário
+    private static void cadastrarFilme() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Informe o nome do Filme:");
+        String nomeFilme = scanner.nextLine();
+
+        System.out.println("Informe o Gênero:");
+        String generoFilme = scanner.nextLine();
+
+        System.out.println("Informe a Duração (Minutos): ");
+        int duracaoFilme = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Informe a Censura: ");
+        String censuraFilme = scanner.nextLine();
+
+        System.out.println("Informe o Diretor: ");
+        String diretorFilme = scanner.nextLine();
+
+        Filme novoFilme = new Filme(nomeFilme, generoFilme, duracaoFilme, censuraFilme, diretorFilme);
+        mapaFilmes.put(novoFilme.getId(), novoFilme);
+        System.out.println("Filme cadastrado com sucesso!");
+
     }
 
     private static int converterNumeroDiaParaNome(int diaSessao) {
