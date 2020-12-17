@@ -1,7 +1,6 @@
-ID,Filme,Gênero,Duração,Censura,Diretor
-1,Zack and Miri,Romance,105,16,Patrick Read Johnson
-2,Youth in Revolt,Comedy,120,10,Taylor Hackford
-3,You Will Meet a Tall Dark Stranger,Comedy,135,10,George Lucas
-4,When in Rome,Comedy,140,10,Robert Zemeckis
-5,What Happens in Vegas,Comedy,110,10,Robert Zemeckis
-
+Filme,Genero,Duracao,Censura,Diretor
+Zack and Miri,Romance,105,16,Patrick Read Johnson
+Youth in Revolt,Comedy,120,10,Taylor Hackford
+You Will Meet a Tall Dark Stranger,Comedy,135,10,George Lucas
+When in Rome,Comedy,140,10,Robert Zemeckis
+What Happens in Vegas,Comedy,110,10,Robert Zemeckis

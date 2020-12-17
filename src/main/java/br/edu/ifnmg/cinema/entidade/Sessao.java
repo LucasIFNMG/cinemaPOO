@@ -20,15 +20,16 @@ public class Sessao{
     private static final double PRECO_FIM_SEMANA_2D = 25.00;
     private static final double PRECO_FIM_SEMANA_3D = 30.00;
 
-    private int id;
+    private final int id;
     private final Filme filme;
     private final String exibicao;
     private final String dimensao;
     private final SalaCinema sala;
     private final int dia;
     private final String horario;
+    private static int totalSessoes = 0;
 
-    public Sessao(int id, Filme filme, String exibicao, String dimensao, SalaCinema sala, int dia, String horario)
+    public Sessao(Filme filme, String exibicao, String dimensao, SalaCinema sala, int dia, String horario)
     {
         this.filme = filme;
         this.exibicao = exibicao;
@@ -36,6 +37,8 @@ public class Sessao{
         this.sala = sala;
         this.dia = dia;
         this.horario = horario;
+        totalSessoes++;
+        this.id = totalSessoes;
 
     }
 
@@ -61,10 +64,6 @@ public class Sessao{
         return sala;
     }
 
-    /**
-     * @return the dia
-    // calendar.get(Calendar.DAY_OF_WEEK), calendar.get(Calendar.HOUR_OF_DAY)
-     */
     public int getDia() {
         return dia;
     }

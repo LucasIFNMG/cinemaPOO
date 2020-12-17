@@ -42,14 +42,16 @@ public class SalaCinema{
         return listaAssentos.get(numeroAssento);
     }
 
-    public void reservarAssento(int numeroAssento){
+    public boolean reservarAssento(int numeroAssento){
 
-        if (getStatusAssento(numeroAssento) == ASSENTO_OCUPADO){
-            // TODO: Exception
-            System.out.println("ERRO! Esta vaga já está ocupada!");
-        } else{
+        boolean reservouSucesso = false;
+
+        if (getStatusAssento(numeroAssento) == ASSENTO_DISPONIVEL){
             listaAssentos.set(numeroAssento, ASSENTO_OCUPADO);
+            reservouSucesso = true;
         }
+
+        return reservouSucesso;
     }
 
     public boolean isSalaLotada(){

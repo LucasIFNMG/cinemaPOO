@@ -10,6 +10,14 @@ import java.util.Scanner;
 import br.edu.ifnmg.cinema.entidade.*;
 
 public class MainCinema{
+
+    private static final int SEGUNDA_FEIRA = 1;
+    private static final int TERCA_FEIRA = 2;
+    private static final int QUARTA_FEIRA = 3;
+    private static final int QUINTA_FEIRA = 4;
+    private static final int SEXTA_FEIRA = 5;
+    private static final int SABADO = 6;
+    private static final int DOMINGO = 7;
     
     private static final HashMap <String, Funcionario> mapaFuncionarios = new HashMap<>();
     private static final HashMap <Integer, Reserva> mapaReservas = new HashMap<>();
@@ -18,8 +26,6 @@ public class MainCinema{
     private static final HashMap <Integer, Sessao> mapaSessoes = new HashMap<>();
     private static final HashMap <Integer, SalaCinema> mapaSalasCinema = new HashMap<>();
     private static final HashMap <Integer, Venda> mapaVendas = new HashMap<>();
-
-
 
     public static void main(String[] args) throws IOException {
 
@@ -30,67 +36,119 @@ public class MainCinema{
     private static void exibirMenus() {
 
         Scanner scanner = new Scanner(System.in);
+        int opcaoUsuario;
 
-        System.out.println("*************************************");
-        System.out.println("Você é um Cliente ou Funcionário?");
-        System.out.println("1: Funcionário");
-        System.out.println("2: Cliente");
-        System.out.println("3: Cliente Visitante - Desejo me cadastrar");
+        do {
 
-        int opcaoUsuario = Integer.parseInt(scanner.nextLine());
+            System.out.println("*************************************");
+            System.out.println("Você é um Cliente ou Funcionário?");
+            System.out.println("1: Funcionário");
+            System.out.println("2: Cliente");
+            System.out.println("3: Cliente Visitante - Desejo me cadastrar");
+            System.out.println("0: Encerrar Programa");
 
-        // Menu Funcionário
-        if (opcaoUsuario == 1)
-        {
-            Funcionario funcionario = autenticarFuncionario();
-            int operacao;
+            opcaoUsuario = Integer.parseInt(scanner.nextLine());
 
-            // Menu ADMIN (nivelAcesso = ESPECIAL)
+            // Menu Funcionário
+            if (opcaoUsuario == 1) {
+                Funcionario funcionario = autenticarFuncionario();
+                int operacao;
 
-            if (funcionario instanceof Administrador) {
+                // Menu ADMIN (nivelAcesso = ESPECIAL)
+
+                if (funcionario instanceof Administrador) {
+
+                    do {
+                        System.out.println("MENU ADMIN");
+                        System.out.println("Digite uma opção:");
+                        System.out.println("1: Criar Sessão");
+                        System.out.println("2: Editar Sessão");
+                        System.out.println("3: Cadastrar Filme");
+                        System.out.println("4: Consultar Total de Vendas");
+                        System.out.println("5: Consultar Salário de Funcionários:");
+                        System.out.println("6: Log out");
+                        System.out.println("Digite uma opção:");
+
+                        operacao = Integer.parseInt(scanner.nextLine());
+
+                        switch (operacao) {
+                            case 1:
+                                cadastrarSessao();
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                            case 6:
+                                System.out.println("Saindo...");
+                                break;
+
+                        }
+
+                    } while (operacao != 6);
+                }
+
+                if (funcionario instanceof Vendedor) {
+
+                    do {
+                        // Menu VENDEDOR (nivelAcesso = PADRAO)
+                        System.out.println("MENU VENDEDOR");
+                        System.out.println("Digite uma opção:");
+                        System.out.println("1: Vender Ingresso");
+                        System.out.println("2: Consultar Reserva");
+                        System.out.println("3: Log out");
+
+                        operacao = Integer.parseInt(scanner.nextLine());
+
+                        switch (operacao) {
+                            case 1:
+                                venderIngresso((Vendedor) funcionario);
+                                break;
+                            case 2:
+                                consultarReserva();
+                                break;
+                            case 3:
+                                System.out.println("Saindo...");
+                                break;
+                            default:
+                                System.out.println("Opção inválida!");
+                                break;
+
+                        }
+
+                    } while (operacao != 3);
+                }
+
+            }
+
+            // Menu Cliente Registrado
+            if (opcaoUsuario == 2) {
+                ClienteRegistrado clienteRegistrado = loginCliente();
+                int operacao;
 
                 do {
-                    System.out.println("MENU ADMIN");
+                    System.out.println("MENU CLIENTE");
                     System.out.println("Digite uma opção:");
-                    System.out.println("1: Criar Sessão");
-                    System.out.println("2: Editar Sessão");
-                    System.out.println("3: Cadastrar Filme");
-                    System.out.println("4: Consultar Total de Vendas");
-                    System.out.println("5: Consultar Salário de Funcionários:");
-                    System.out.println("6: Sair");
-                    System.out.println("Digite uma opção:");
+                    System.out.println("1: Visualizar Sessões");
+                    System.out.println("2: Reservar Sessão");
+                    System.out.println("3: Log out");
 
                     operacao = Integer.parseInt(scanner.nextLine());
 
                     switch (operacao) {
-
-
-                    }
-
-                } while (operacao != 9);
-            }
-
-            if (funcionario instanceof Vendedor){
-
-                do {
-                    // Menu VENDEDOR (nivelAcesso = PADRAO)
-                    System.out.println("MENU VENDEDOR");
-                    System.out.println("Digite uma opção:");
-                    System.out.println("1: Vender Ingresso");
-                    System.out.println("2: Consultar Reserva");
-                    System.out.println("3: Sair");
-
-                    operacao = Integer.parseInt(scanner.nextLine());
-
-                    switch(operacao){
                         case 1:
-                            venderIngresso((Vendedor)funcionario);
+                            assert clienteRegistrado != null;
+                            visualizarSessoes();
                             break;
                         case 2:
-                            consultarReserva();
+                            reservarSessao(clienteRegistrado);
                             break;
                         case 3:
-                            System.out.println("Encerrando...");
+                            System.out.println("Saindo...");
                             break;
                         default:
                             System.out.println("Opção inválida!");
@@ -101,60 +159,96 @@ public class MainCinema{
                 } while (operacao != 3);
             }
 
+            // Cadastrar Cliente
+            if (opcaoUsuario == 3) {
+                System.out.println("Digite o seu nome: ");
+                String nome = scanner.nextLine();
+                System.out.println("Digite o seu e-mail: ");
+                String email = scanner.nextLine();
+                System.out.println("Digite sua senha: ");
+                String senha = scanner.nextLine();
+                System.out.println("Digite o seu CPF: ");
+                String documento = scanner.nextLine();
+                //System.out.println("Digite o ano em que você nasceu: ");
+                System.out.println("Digite a sua idade:");
+                int idade = scanner.nextInt();
+                ClienteVisitante.registrar(nome, senha, email, documento, idade, mapaClientes);
+                System.out.println("Cliente cadastrado com sucesso!");
+                System.out.println("Faça o log-in utilizando o seu e-mail e senha.");
+                exibirMenus();
+            }
+        } while (opcaoUsuario != 0);
+
+        System.out.println("Encerrando...");
+    }
+
+    private static void cadastrarSessao() {
+        Scanner scanner = new Scanner(System.in);
+
+        // Exibir Filmes
+        for (Map.Entry<Integer, Filme> entry : mapaFilmes.entrySet()) {
+            System.out.printf("%d - %s%n", entry.getKey(), entry.getValue().getNome());
         }
 
-        // Menu Cliente Registrado
-        if (opcaoUsuario == 2){
-            ClienteRegistrado clienteRegistrado = loginCliente();
-            int operacao;
+        System.out.println("Informe o nº do Filme:");
+        int numeroFilmeEscolhido = Integer.parseInt(scanner.nextLine());
+        Filme filmeSessao = mapaFilmes.get(numeroFilmeEscolhido);
 
-            do {
-                System.out.println("MENU CLIENTE");
-                System.out.println("Digite uma opção:");
-                System.out.println("1: Visualizar Sessões");
-                System.out.println("2: Reservar Sessão");
-                System.out.println("3: Sair");
+        System.out.println("Dublado ou Legendado?");
+        String exibicaoFilme = scanner.nextLine();
 
-                operacao = Integer.parseInt(scanner.nextLine());
+        System.out.println("2D ou 3D?");
+        String dimensaoFilme = scanner.nextLine();
 
-                switch(operacao){
-                    case 1:
-                        assert clienteRegistrado != null;
-                        visualizarSessoes();
-                        break;
-                    case 2:
-                        reservarSessao(clienteRegistrado);
-                        break;
-                    case 3:
-                        System.out.println("Encerrando...");
-                        break;
-                    default:
-                        System.out.println("Opção inválida!");
-                        break;
+        // Exibir Salas
+        for (Map.Entry<Integer, SalaCinema> entry : mapaSalasCinema.entrySet()) {
+            System.out.printf("%d ", entry.getKey());
+        }
+        System.out.println();
+        System.out.println("Informe o nº da Sala em que a sessão será exibida :");
+        int numeroSala = Integer.parseInt(scanner.nextLine());
+        SalaCinema salaSessao = mapaSalasCinema.get(numeroSala);
 
-                }
+        System.out.println("1 - Segunda-Feira");
+        System.out.println("2 - Terça-Feira");
+        System.out.println("3 - Quarta-Feira");
+        System.out.println("4 - Quinta-Feira");
+        System.out.println("5 - Sexta-Feira");
+        System.out.println("6 - Sábado");
+        System.out.println("7 - Domingo");
+        System.out.println("Informe o Dia em que a sessão será exibida:");
+        int diaSessao = Integer.parseInt(scanner.nextLine());
+        diaSessao = converterNumeroDiaParaNome(diaSessao);
 
-            } while (operacao != 3);
+        System.out.println("Informe o Horário da sessão (HH:MM): ");
+        String horarioSessao = scanner.nextLine();
+
+        Sessao novaSessao = new Sessao(filmeSessao, exibicaoFilme, dimensaoFilme, salaSessao, diaSessao, horarioSessao);
+        // TODO: Teste unitário
+        mapaSessoes.put(novaSessao.getId(), novaSessao);
+        System.out.println("Sessão cadastrada com sucesso!");
+    }
+
+    private static int converterNumeroDiaParaNome(int diaSessao) {
+
+        switch(diaSessao){
+            case 1:
+                return SEGUNDA_FEIRA;
+            case 2:
+                return TERCA_FEIRA;
+            case 3:
+                return QUARTA_FEIRA;
+            case 4:
+                return QUINTA_FEIRA;
+            case 5:
+                return SEXTA_FEIRA;
+            case 6:
+                return SABADO;
+            case 7:
+                return DOMINGO;
         }
 
-        // Cadastrar Cliente
-        if (opcaoUsuario == 3){
-            System.out.println("Digite o seu nome: ");
-            String nome = scanner.nextLine();
-            System.out.println("Digite o seu e-mail: ");
-            String email = scanner.nextLine();
-            System.out.println("Digite sua senha: ");
-            String senha = scanner.nextLine();
-            System.out.println("Digite o seu CPF: ");
-            String documento = scanner.nextLine();
-            //System.out.println("Digite o ano em que você nasceu: ");
-            System.out.println("Digite a sua idade:");
-            int idade = scanner.nextInt();
-            ClienteVisitante.registrar(nome, senha, email, documento, idade, mapaClientes);
-            System.out.println("Cliente cadastrado com sucesso!");
-            System.out.println("Faça o log-in utilizando o seu e-mail e senha.");
-            exibirMenus();
-        }
+        return diaSessao;
     }
 
     private static void visualizarSessoes() {
@@ -181,12 +275,20 @@ public class MainCinema{
         if (salaSessaoEscolhida.isSalaLotada()){
             System.out.println("Sessão lotada!");
         }else{
-            System.out.println("Escolha o nº do assento:");
-            salaSessaoEscolhida.imprimirAssentosDisponiveis();
-            // TODO: EXCEPTION EM OPCAO
-            opcaoAssento = Integer.parseInt(scanner.nextLine()) - 1;
-            salaSessaoEscolhida.reservarAssento(opcaoAssento);
-            System.out.println("Assento Reservado.");
+
+            boolean reservouSucesso;
+            do {
+                System.out.println("Escolha o nº do assento:");
+                salaSessaoEscolhida.imprimirAssentosDisponiveis();
+                // TODO: EXCEPTION EM OPCAO
+                opcaoAssento = Integer.parseInt(scanner.nextLine()) - 1;
+
+                 reservouSucesso = salaSessaoEscolhida.reservarAssento(opcaoAssento);
+
+                 if (!reservouSucesso){
+                     System.out.println("ERRO! Este assento já está reservado!");
+                 }
+            } while(!reservouSucesso);
 
             System.out.println("Meia Entrada ou Inteira?");
             System.out.println("1 - Meia Entrada");
@@ -196,7 +298,7 @@ public class MainCinema{
 
             if (opcaoEntrada == 1){
                 System.out.printf("Atenção: o direito da meia-entrada é intransferível.%n" +
-                        "Você deve apresentar o seu documento quando for imprimir o seu ingresso. ");
+                        "Você deve apresentar o seu documento quando for imprimir o seu ingresso.%n");
                 Ingresso ingresso = new Ingresso(sessaoEscolhida, true, opcaoAssento);
                 Reserva reserva = new Reserva(ingresso, clienteRegistrado);
                 mapaReservas.put(reserva.getId(), reserva);
@@ -362,7 +464,7 @@ public class MainCinema{
                 mapaFuncionarios.put(id, administrador);
             }
         }
-        System.out.println("Dados de funcionários.");
+        System.out.println("Dados de funcionários carregados.");
     }
 
     private static void carregarDadosFilmes() throws IOException {
@@ -380,11 +482,11 @@ public class MainCinema{
 
         while ((linha = bufferedReader.readLine()) != null) {
             String[] colunas = linha.split(separador);
-            String nome = colunas[1];
-            String genero = colunas[2];
-            int duracaoMins = Integer.parseInt(colunas[3]);
-            String censura = colunas[4];
-            String diretor = colunas[5];
+            String nome = colunas[0];
+            String genero = colunas[1];
+            int duracaoMins = Integer.parseInt(colunas[2]);
+            String censura = colunas[3];
+            String diretor = colunas[4];
             Filme filme = new Filme(nome, genero, duracaoMins, censura, diretor);
             mapaFilmes.put(filme.getId(), filme);
         }
@@ -406,19 +508,18 @@ public class MainCinema{
 
         while ((linha = bufferedReader.readLine()) != null) {
             String[] colunas = linha.split(separador);
-            int idSessao = Integer.parseInt(colunas[0]);
-            int idFilme = Integer.parseInt(colunas[1]);
-            String exibicao = colunas[2];
-            String dimensao = colunas[3];
-            int dia = Integer.parseInt(colunas[4]);
-            String horario = colunas[5];
-            int numeroSala = Integer.parseInt(colunas[6]);
+            int idFilme = Integer.parseInt(colunas[0]);
+            String exibicao = colunas[1];
+            String dimensao = colunas[2];
+            int dia = Integer.parseInt(colunas[3]);
+            String horario = colunas[4];
+            int numeroSala = Integer.parseInt(colunas[5]);
 
             Filme filme = mapaFilmes.get(idFilme);
             SalaCinema salaCinema = mapaSalasCinema.get(numeroSala);
 
-            Sessao sessao = new Sessao(idSessao, filme, exibicao, dimensao, salaCinema, dia, horario);
-            mapaSessoes.put(idSessao, sessao);
+            Sessao sessao = new Sessao(filme, exibicao, dimensao, salaCinema, dia, horario);
+            mapaSessoes.put(sessao.getId(), sessao);
         }
         System.out.println("Dados das sessões carregados.");
     }
@@ -469,11 +570,11 @@ public class MainCinema{
                         funcionarioPesquisado.autenticar(senhaPesquisada);
 
                 if(autenticadoSucesso){
-                    System.out.printf("%s (%s) autenticado com sucesso!",
+                    System.out.printf("%s (%s) autenticado com sucesso!%n",
                             funcionarioPesquisado.getNome(),
                             funcionarioPesquisado.getId());
                 }else{
-                    System.out.printf("%s (%s) não autenticado! Senha incorreta",
+                    System.out.printf("%s (%s) não autenticado! Senha incorreta!%n",
                             funcionarioPesquisado.getNome(),
                             funcionarioPesquisado.getId());
                 }
