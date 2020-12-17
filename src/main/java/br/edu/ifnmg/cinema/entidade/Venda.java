@@ -23,4 +23,7 @@ public class Venda {
         return id;
     }
 
+    public Ingresso getIngresso() {
+        return ingresso;
+    }
 }

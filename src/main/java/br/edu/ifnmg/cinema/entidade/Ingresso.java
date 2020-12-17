@@ -3,10 +3,10 @@ package br.edu.ifnmg.cinema.entidade;
 public class Ingresso
 {
     // No caso de Meia-entrada ou Reserva, deve-se pedir os dados do cliente
-    private Sessao sessao;
-    private boolean isMeiaEntrada;
-    private double preco;
-    private int numeroAssento;
+    private final Sessao sessao;
+    private final boolean isMeiaEntrada;
+    private final double preco;
+    private final int numeroAssento;
 
     public Ingresso(Sessao sessao, boolean isMeiaEntrada, int numeroAssento)
     {

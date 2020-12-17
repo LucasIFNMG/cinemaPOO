@@ -65,9 +65,10 @@ public class MainCinema{
                         System.out.println("1: Criar Sessão");
                         System.out.println("2: Editar Sessão");
                         System.out.println("3: Cadastrar Filme");
-                        System.out.println("4: Consultar Total de Vendas");
-                        System.out.println("5: Consultar Salário de Funcionários:");
-                        System.out.println("6: Log out");
+                        System.out.println("4: Consultar Total Arrecadado em Vendas");
+                        System.out.println("5: Consultar Total Arrecadado em Reservas ");
+                        System.out.println("6: Consultar Salário de Funcionários:");
+                        System.out.println("7: Log out");
                         System.out.println("Digite uma opção:");
 
                         operacao = Integer.parseInt(scanner.nextLine());
@@ -83,16 +84,21 @@ public class MainCinema{
                                 cadastrarFilme();
                                 break;
                             case 4:
+                                consultarTotalArrecadadoVendas();
                                 break;
                             case 5:
+                                consultarTotalArrecadadoReservas();
                                 break;
                             case 6:
+                                break;
+                            case 7:
                                 System.out.println("Saindo...");
                                 break;
-
+                            default:
+                                System.out.println("Opção inválida!");
                         }
 
-                    } while (operacao != 6);
+                    } while (operacao != 7);
                 }
 
                 if (funcionario instanceof Vendedor) {
@@ -125,7 +131,6 @@ public class MainCinema{
 
                     } while (operacao != 3);
                 }
-
             }
 
             // Menu Cliente Registrado
@@ -156,9 +161,7 @@ public class MainCinema{
                         default:
                             System.out.println("Opção inválida!");
                             break;
-
                     }
-
                 } while (operacao != 3);
             }
 
@@ -183,6 +186,26 @@ public class MainCinema{
         } while (opcaoUsuario != 0);
 
         System.out.println("Encerrando...");
+    }
+
+    private static void consultarTotalArrecadadoVendas() {
+
+        double totalArrecadadoVendas = 0;
+        for (Map.Entry<Integer, Venda> entry : mapaVendas.entrySet()) {
+            totalArrecadadoVendas += entry.getValue().getIngresso().getPreco();
+        }
+
+        System.out.printf("Total em Vendas: R$ %.2f%n", totalArrecadadoVendas);
+    }
+
+    private static void consultarTotalArrecadadoReservas() {
+
+        double totalArrecadadoReservas = 0;
+        for (Map.Entry<Integer, Reserva> entry : mapaReservas.entrySet()) {
+            totalArrecadadoReservas += entry.getValue().getIngresso().getPreco();
+        }
+
+        System.out.printf("Total em Reservas: R$ %.2f%n", totalArrecadadoReservas);
     }
 
     private static void editarSessao() {
