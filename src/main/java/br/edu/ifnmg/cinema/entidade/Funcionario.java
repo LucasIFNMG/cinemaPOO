@@ -5,12 +5,12 @@ import java.text.NumberFormat;
 public abstract class Funcionario{
 
     protected String nome;
-    protected String id;
+    protected int id;
     protected String senha;
     protected double salarioBase;
     protected int nivelAcesso;
 
-    public Funcionario(String nome, String id, String senha, double salarioBase, int nivelAcesso)
+    public Funcionario(String nome, int id, String senha, double salarioBase, int nivelAcesso)
     {
         this.nome = nome;
         this.id = id;
@@ -19,17 +19,11 @@ public abstract class Funcionario{
         this.nivelAcesso = nivelAcesso;
     }
 
-    /**
-     * @return the nome
-     */
     public String getNome() {
         return nome;
     }
 
-    /**
-     * @return the id
-     */
-    public String getId() {
+    public int getId() {
         return id;
     }
 

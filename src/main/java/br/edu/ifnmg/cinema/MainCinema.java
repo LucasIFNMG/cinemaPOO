@@ -20,7 +20,8 @@ public class MainCinema{
     private static final int SABADO = 6;
     private static final int DOMINGO = 7;
     
-    private static final HashMap <String, Funcionario> mapaFuncionarios = new HashMap<>();
+    private static final HashMap<Integer, Funcionario> mapaFuncionarios = new HashMap<>();
+    // private static final HashMap<Integer, Vendedor> mapaVendedores = new HashMap<>();
     private static final HashMap <Integer, Reserva> mapaReservas = new HashMap<>();
     private static final HashMap <String, ClienteRegistrado> mapaClientes = new HashMap<>();
     private static final HashMap <Integer, Filme> mapaFilmes = new HashMap<>();
@@ -60,6 +61,7 @@ public class MainCinema{
                 if (funcionario instanceof Administrador) {
 
                     do {
+                        System.out.println("*************************************");
                         System.out.println("MENU ADMIN");
                         System.out.println("Digite uma opção:");
                         System.out.println("1: Criar Sessão");
@@ -67,7 +69,7 @@ public class MainCinema{
                         System.out.println("3: Cadastrar Filme");
                         System.out.println("4: Consultar Total Arrecadado em Vendas");
                         System.out.println("5: Consultar Total Arrecadado em Reservas ");
-                        System.out.println("6: Consultar Salário de Funcionários:");
+                        System.out.println("6: Consultar Comissões dos Vendedores:");
                         System.out.println("7: Log out");
                         System.out.println("Digite uma opção:");
 
@@ -90,6 +92,7 @@ public class MainCinema{
                                 consultarTotalArrecadadoReservas();
                                 break;
                             case 6:
+                                consultarComissaoFuncionarios();
                                 break;
                             case 7:
                                 System.out.println("Saindo...");
@@ -104,7 +107,7 @@ public class MainCinema{
                 if (funcionario instanceof Vendedor) {
 
                     do {
-                        // Menu VENDEDOR (nivelAcesso = PADRAO)
+                        System.out.println("*************************************");
                         System.out.println("MENU VENDEDOR");
                         System.out.println("Digite uma opção:");
                         System.out.println("1: Vender Ingresso");
@@ -139,6 +142,7 @@ public class MainCinema{
                 int operacao;
 
                 do {
+                    System.out.println("*************************************");
                     System.out.println("MENU CLIENTE");
                     System.out.println("Digite uma opção:");
                     System.out.println("1: Visualizar Sessões");
@@ -186,6 +190,26 @@ public class MainCinema{
         } while (opcaoUsuario != 0);
 
         System.out.println("Encerrando...");
+    }
+
+    private static void consultarComissaoFuncionarios() {
+        System.out.println("Exibindo Comissões:");
+
+        /*
+        for (Map.Entry<Integer, Vendedor> entry : mapaVendedores.entrySet()) {
+            System.out.printf("%s: %.2f%n", entry.getValue().getNome(),
+                    entry.getValue().getTotalComissao());
+        }
+         */
+        for (Map.Entry<Integer, Funcionario> entry : mapaFuncionarios.entrySet()) {
+            if (entry.getValue() instanceof Vendedor) {
+                Vendedor vendedor = (Vendedor) entry.getValue();
+
+                System.out.printf("%s: %.2f%n", entry.getValue().getNome(),
+                        vendedor.getTotalComissao());
+            }
+        }
+
     }
 
     private static void consultarTotalArrecadadoVendas() {
@@ -434,7 +458,11 @@ public class MainCinema{
     private static void venderIngresso(Vendedor vendedor) {
 
         Scanner scanner = new Scanner(System.in);
-        visualizarSessoes();
+        for (Map.Entry<Integer, Sessao> entry : mapaSessoes.entrySet()) {
+            System.out.printf("%d - ", entry.getKey());
+            entry.getValue().imprimirFilmeDiaHorarioSessao();
+            System.out.println();
+        }
         System.out.println("Informe a sessão:");
         int opcaoSessao = Integer.parseInt(scanner.nextLine());
         Sessao sessaoEscolhida = mapaSessoes.get(opcaoSessao);
@@ -529,16 +557,16 @@ public class MainCinema{
 
         while ((linha = bufferedReader.readLine()) != null) {
             String[] colunas = linha.split(separador);
-            String id = colunas[0];
+            int id = Integer.parseInt(colunas[0]);
             String nome = colunas[1];
             String senha = colunas[2];
             int nivelAcesso = Integer.parseInt(colunas[3]);
             double salarioBase = Double.parseDouble(colunas[4]);
             if (nivelAcesso == 0) {
-                Funcionario vendedor = new Vendedor(id, nome, senha, salarioBase, nivelAcesso);
+                Vendedor vendedor = new Vendedor(nome, id, senha, salarioBase, nivelAcesso);
                 mapaFuncionarios.put(id, vendedor);
             } else{
-                Funcionario administrador = new Administrador(id, nome, senha, salarioBase, nivelAcesso);
+                Funcionario administrador = new Administrador(nome, id, senha, salarioBase, nivelAcesso);
                 mapaFuncionarios.put(id, administrador);
             }
         }
@@ -634,7 +662,7 @@ public class MainCinema{
         do{
             System.out.println("\nDigite o ID do funcionario:");
             //String numeroPesquisado = "1";
-            String idPesquisado = scanner.nextLine();
+            int idPesquisado = Integer.parseInt(scanner.nextLine());
 
             System.out.println("Digite a senha:");
             //String senhaPesquisada = "6838";

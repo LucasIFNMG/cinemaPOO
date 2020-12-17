@@ -4,7 +4,7 @@ import java.text.NumberFormat;
 
 public class Administrador extends Funcionario{
 
-    public Administrador(String nome, String id, String senha, double salarioBase, int nivelAcesso) {
+    public Administrador(String nome, int id, String senha, double salarioBase, int nivelAcesso) {
         super(nome, id, senha, salarioBase, nivelAcesso);
     }
 

@@ -2,37 +2,33 @@ package br.edu.ifnmg.cinema.entidade;
 
 public class Vendedor extends Funcionario{
 
+    private static final double DEZ_PORCENTO = 0.1;
+
     private double totalVendido;
-    private double totalComissao;
-    private double porcentComissao = 0.1;
     private double comissao;
-    private int numVendasIngressos = 0;
+    private int numVendasIngressos;
 
-    public Vendedor(String nome, String id, String senha, double salarioBase, int nivelAcesso) {
+    public Vendedor(String nome, int id, String senha, double salarioBase, int nivelAcesso) {
         super(nome, id, senha, salarioBase, nivelAcesso);
-    }
-
-    public void setNumVendasIngressos(int numVendasIngressos) {
-        this.numVendasIngressos = numVendasIngressos;
+        this.numVendasIngressos = 0;
+        this.totalVendido = 0;
     }
 
     public int getNumVendasIngressos() {
         return numVendasIngressos;
     }
 
-    public void setTotalVendido(double totalVendido) {
-        this.totalVendido = totalVendido;
-    }
-
     public double getTotalVendido() {
         return this.totalVendido;
     }
 
+    public void incrementarTotalVendidoFuncionario(double valor){
+        this.totalVendido += valor;
+    }
+
     public double getTotalComissao()
     {
-        // totalVendido = this.getTotalVendido();
-        this.totalComissao = getTotalVendido() * porcentComissao;
-        return this.totalComissao;
+        return getTotalVendido() * DEZ_PORCENTO;
     }
 
     public void incrementarNumeroVendasFuncionario(){

@@ -11,7 +11,10 @@ public class Venda {
         this.vendedor = vendedor;
         this.id = numeroVendasCinema + 1;
 
-        this.vendedor.incrementarNumeroVendasFuncionario();
+        double valorVenda = this.getIngresso().getPreco();
+        this.getVendedor().incrementarTotalVendidoFuncionario(valorVenda);
+
+        this.getVendedor().incrementarNumeroVendasFuncionario();
         numeroVendasCinema++;
     }
 
@@ -25,5 +28,9 @@ public class Venda {
 
     public Ingresso getIngresso() {
         return ingresso;
+    }
+
+    public Vendedor getVendedor() {
+        return vendedor;
     }
 }
