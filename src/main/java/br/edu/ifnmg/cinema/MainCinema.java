@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 
 import br.edu.ifnmg.cinema.entidade.*;
@@ -76,6 +77,7 @@ public class MainCinema{
                                 cadastrarSessao();
                                 break;
                             case 2:
+                                editarSessao();
                                 break;
                             case 3:
                                 break;
@@ -180,6 +182,33 @@ public class MainCinema{
         } while (opcaoUsuario != 0);
 
         System.out.println("Encerrando...");
+    }
+
+    private static void editarSessao() {
+
+        Scanner scanner = new Scanner(System.in);
+        int numeroSessao;
+
+        boolean sessaoValida = true;
+        do {
+            try {
+                for (Map.Entry<Integer, Sessao> entry : mapaSessoes.entrySet()) {
+                    System.out.printf("%d - ", entry.getKey());
+                    entry.getValue().imprimirFilmeDiaHorarioSessao();
+                    System.out.println();
+                }
+                System.out.println("Informe o nº da Sessão a ser editada: ");
+                numeroSessao = Integer.parseInt(scanner.nextLine());
+
+                Sessao sessaoRemovida = mapaSessoes.remove(numeroSessao);
+                Objects.requireNonNull(sessaoRemovida);
+
+            } catch (NullPointerException e) {
+                sessaoValida = false;
+                System.out.println("Sessão inválida!");
+            }
+        } while (!sessaoValida);
+        cadastrarSessao();
     }
 
     private static void cadastrarSessao() {
