@@ -21,7 +21,6 @@ public class MainCinema{
     private static final int DOMINGO = 7;
     
     private static final HashMap<Integer, Funcionario> mapaFuncionarios = new HashMap<>();
-    // private static final HashMap<Integer, Vendedor> mapaVendedores = new HashMap<>();
     private static final HashMap <Integer, Reserva> mapaReservas = new HashMap<>();
     private static final HashMap <String, ClienteRegistrado> mapaClientes = new HashMap<>();
     private static final HashMap <Integer, Filme> mapaFilmes = new HashMap<>();
@@ -47,6 +46,7 @@ public class MainCinema{
             System.out.println("1: Funcionário");
             System.out.println("2: Cliente");
             System.out.println("3: Cliente Visitante - Desejo me cadastrar");
+            System.out.println("4: Visualizar Sessões");
             System.out.println("0: Encerrar Programa");
 
             opcaoUsuario = Integer.parseInt(scanner.nextLine());
@@ -57,7 +57,6 @@ public class MainCinema{
                 int operacao;
 
                 // Menu ADMIN (nivelAcesso = ESPECIAL)
-
                 if (funcionario instanceof Administrador) {
 
                     do {
@@ -69,7 +68,7 @@ public class MainCinema{
                         System.out.println("3: Cadastrar Filme");
                         System.out.println("4: Consultar Total Arrecadado em Vendas");
                         System.out.println("5: Consultar Total Arrecadado em Reservas ");
-                        System.out.println("6: Consultar Comissões dos Vendedores:");
+                        System.out.println("6: Consultar Comissões dos Vendedores");
                         System.out.println("7: Log out");
                         System.out.println("Digite uma opção:");
 
@@ -137,7 +136,7 @@ public class MainCinema{
             }
 
             // Menu Cliente Registrado
-            if (opcaoUsuario == 2) {
+            else if (opcaoUsuario == 2) {
                 ClienteRegistrado clienteRegistrado = loginCliente();
                 int operacao;
 
@@ -153,7 +152,6 @@ public class MainCinema{
 
                     switch (operacao) {
                         case 1:
-                            assert clienteRegistrado != null;
                             visualizarSessoes();
                             break;
                         case 2:
@@ -170,37 +168,45 @@ public class MainCinema{
             }
 
             // Cadastrar Cliente
-            if (opcaoUsuario == 3) {
-                System.out.println("Digite o seu nome: ");
-                String nome = scanner.nextLine();
-                System.out.println("Digite o seu e-mail: ");
-                String email = scanner.nextLine();
-                System.out.println("Digite sua senha: ");
-                String senha = scanner.nextLine();
-                System.out.println("Digite o seu CPF: ");
-                String documento = scanner.nextLine();
-                //System.out.println("Digite o ano em que você nasceu: ");
-                System.out.println("Digite a sua idade:");
-                int idade = scanner.nextInt();
-                ClienteVisitante.registrar(nome, senha, email, documento, idade, mapaClientes);
-                System.out.println("Cliente cadastrado com sucesso!");
-                System.out.println("Faça o log-in utilizando o seu e-mail e senha.");
+            else if (opcaoUsuario == 3) {
+                cadastrarCliente();
                 exibirMenus();
             }
-        } while (opcaoUsuario != 0);
+            else if (opcaoUsuario == 4){
+                visualizarSessoes();
+            }
+            else if (opcaoUsuario == 0){
+                break;
+            }
+            else{
+                System.out.println("Opção inválida!");
+            }
+        } while (true);
 
         System.out.println("Encerrando...");
+    }
+
+    private static void cadastrarCliente() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Digite o seu nome: ");
+        String nome = scanner.nextLine();
+        System.out.println("Digite o seu e-mail: ");
+        String email = scanner.nextLine();
+        System.out.println("Digite sua senha: ");
+        String senha = scanner.nextLine();
+        System.out.println("Digite o seu CPF: ");
+        String documento = scanner.nextLine();
+        //System.out.println("Digite o ano em que você nasceu: ");
+        System.out.println("Digite a sua idade:");
+        int idade = scanner.nextInt();
+        ClienteVisitante.registrar(nome, senha, email, documento, idade, mapaClientes);
+        System.out.println("Cliente cadastrado com sucesso!");
+        System.out.println("Faça o log-in utilizando o seu e-mail e senha.");
     }
 
     private static void consultarComissaoFuncionarios() {
         System.out.println("Exibindo Comissões:");
 
-        /*
-        for (Map.Entry<Integer, Vendedor> entry : mapaVendedores.entrySet()) {
-            System.out.printf("%s: %.2f%n", entry.getValue().getNome(),
-                    entry.getValue().getTotalComissao());
-        }
-         */
         for (Map.Entry<Integer, Funcionario> entry : mapaFuncionarios.entrySet()) {
             if (entry.getValue() instanceof Vendedor) {
                 Vendedor vendedor = (Vendedor) entry.getValue();
@@ -309,25 +315,35 @@ public class MainCinema{
     // TODO: Teste unitário
     private static void cadastrarFilme() {
         Scanner scanner = new Scanner(System.in);
+        boolean cadastroSucesso;
+        do {
 
-        System.out.println("Informe o nome do Filme:");
-        String nomeFilme = scanner.nextLine();
+            try {
 
-        System.out.println("Informe o Gênero:");
-        String generoFilme = scanner.nextLine();
+                System.out.println("Informe o nome do Filme:");
+                String nomeFilme = scanner.nextLine();
 
-        System.out.println("Informe a Duração (Minutos): ");
-        int duracaoFilme = Integer.parseInt(scanner.nextLine());
+                System.out.println("Informe o Gênero:");
+                String generoFilme = scanner.nextLine();
 
-        System.out.println("Informe a Censura: ");
-        String censuraFilme = scanner.nextLine();
+                System.out.println("Informe a Duração (Minutos): ");
+                int duracaoFilme = Integer.parseInt(scanner.nextLine());
 
-        System.out.println("Informe o Diretor: ");
-        String diretorFilme = scanner.nextLine();
+                System.out.println("Informe a Censura: ");
+                String censuraFilme = scanner.nextLine();
 
-        Filme novoFilme = new Filme(nomeFilme, generoFilme, duracaoFilme, censuraFilme, diretorFilme);
-        mapaFilmes.put(novoFilme.getId(), novoFilme);
-        System.out.println("Filme cadastrado com sucesso!");
+                System.out.println("Informe o Diretor: ");
+                String diretorFilme = scanner.nextLine();
+
+                Filme novoFilme = new Filme(nomeFilme, generoFilme, duracaoFilme, censuraFilme, diretorFilme);
+                cadastroSucesso = true;
+                mapaFilmes.put(novoFilme.getId(), novoFilme);
+                System.out.println("Filme cadastrado com sucesso!");
+            }catch (IllegalArgumentException e){
+                System.out.println("Dados para cadastro inválidos!");
+                cadastroSucesso = false;
+            }
+        } while(!cadastroSucesso);
 
     }
 
@@ -360,45 +376,63 @@ public class MainCinema{
     }
 
     private static void reservarSessao(ClienteRegistrado clienteRegistrado) {
-        // TODO: Reserva Herdar de Venda
         Scanner scanner = new Scanner(System.in);
+
         for (Map.Entry<Integer, Sessao> entry : mapaSessoes.entrySet()) {
             System.out.printf("%d - ", entry.getKey());
             entry.getValue().imprimirFilmeDiaHorarioSessao();
         }
-        System.out.println("Informe a sessão:");
-        int opcaoSessao = Integer.parseInt(scanner.nextLine());
-        Sessao sessaoEscolhida = mapaSessoes.get(opcaoSessao);
-        SalaCinema salaSessaoEscolhida = sessaoEscolhida.getSala();
+        int opcaoSessao;
+        int opcaoAssento = 0;
+        int opcaoEntrada = 0;
+        try {
 
-        int opcaoAssento;
-        int opcaoEntrada;
+            System.out.println("Informe a sessão:");
+            opcaoSessao = Integer.parseInt(scanner.nextLine());
 
-        if (salaSessaoEscolhida.isSalaLotada()){
-            System.out.println("Sessão lotada!");
-        }else{
+            Sessao sessaoEscolhida = mapaSessoes.get(opcaoSessao);
+            Objects.requireNonNull(sessaoEscolhida);
+            SalaCinema salaSessaoEscolhida = sessaoEscolhida.getSala();
 
-            boolean reservouSucesso;
-            do {
-                System.out.println("Escolha o nº do assento:");
-                salaSessaoEscolhida.imprimirAssentosDisponiveis();
-                // TODO: EXCEPTION EM OPCAO
-                opcaoAssento = Integer.parseInt(scanner.nextLine()) - 1;
+            if (salaSessaoEscolhida.isSalaLotada()) {
+                System.out.println("Sessão lotada!");
+            } else {
+                boolean reservouSucesso;
 
-                 reservouSucesso = salaSessaoEscolhida.reservarAssento(opcaoAssento);
+                do {
+                    try {
 
-                 if (!reservouSucesso){
-                     System.out.println("ERRO! Este assento já está reservado!");
-                 }
-            } while(!reservouSucesso);
+                        System.out.println("Escolha o nº do assento:");
+                        salaSessaoEscolhida.imprimirAssentosDisponiveis();
+                        opcaoAssento = Integer.parseInt(scanner.nextLine()) - 1;
+                        salaSessaoEscolhida.verificarAssento(opcaoAssento);
+                        reservouSucesso = true;
 
-            System.out.println("Meia Entrada ou Inteira?");
-            System.out.println("1 - Meia Entrada");
-            System.out.println("2 - Inteira");
-            // TODO: EXCEPTION EM OPCAO
-            opcaoEntrada = Integer.parseInt(scanner.nextLine());
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Assento inválido!");
+                        reservouSucesso = false;
+                    }
+                } while (!reservouSucesso);
 
-            if (opcaoEntrada == 1){
+                boolean opcaoValida;
+            do{
+                try {
+                    System.out.println("Meia Entrada ou Inteira?");
+                    System.out.println("1 - Meia Entrada");
+                    System.out.println("2 - Inteira");
+                    opcaoEntrada = Integer.parseInt(scanner.nextLine());
+                    opcaoValida = true;
+                    if (opcaoEntrada != 1 && opcaoEntrada != 2){
+                        throw new IllegalArgumentException();
+                    }
+                } catch (IllegalArgumentException e){
+                    System.out.println("Opção inválida!");
+                    opcaoValida = false;
+                }
+            } while (!opcaoValida);
+
+
+            if (opcaoEntrada == 1) {
                 System.out.printf("Atenção: o direito da meia-entrada é intransferível.%n" +
                         "Você deve apresentar o seu documento quando for imprimir o seu ingresso.%n");
                 Ingresso ingresso = new Ingresso(sessaoEscolhida, true, opcaoAssento);
@@ -416,7 +450,7 @@ public class MainCinema{
 
             }
 
-            /* TODO: debitarCartão
+            /* TODO: Funcionalidade debitarCartão
             System.out.println("Informe o nº do cartão de crédito:");
             String numeroCartao = scanner.nextLine();
             System.out.println("Informe o CVC: ");
@@ -425,39 +459,54 @@ public class MainCinema{
 
             System.out.println("Reserva realizada com sucesso!");
             System.out.println("Apresente o Código da Reserva junto com o seu documento para imprimir o ingresso.");
+            }
+        } catch (NullPointerException e) {
+            System.out.println("Sessão inválida!");
         }
     }
 
     private static void consultarReserva() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Informe o ID da reserva:");
-        int idReserva = Integer.parseInt(scanner.nextLine());
-        // TODO: Exception na busca
-        Reserva reservaPesquisada = mapaReservas.get(idReserva);
-        int idSessaoReservada = reservaPesquisada.getIngresso().getSessao().getId();
-        String filmeSessaoReservada = reservaPesquisada.getIngresso().getSessao().getFilme().getNome();
-        String nomeClienteReservou = reservaPesquisada.getClienteRegistrado().getNome();
-        String documentoClienteReservou = reservaPesquisada.getClienteRegistrado().getDocumento();
+        int idReserva;
+        boolean reservaValida;
+        do {
+            try {
+                System.out.println("Informe o ID da reserva:");
+                idReserva = Integer.parseInt(scanner.nextLine());
 
-        System.out.printf("Sessão: %d" + "Filme: %s" + "Cliente: %s" + "Documento: %s",
-                idSessaoReservada, filmeSessaoReservada, nomeClienteReservou, documentoClienteReservou);
+                Reserva reservaPesquisada = mapaReservas.get(idReserva);
+                Objects.requireNonNull(reservaPesquisada);
+                reservaValida = true;
 
-        Ingresso ingresso = reservaPesquisada.getIngresso();
-        ingresso.imprimirIngresso();
+                int idSessaoReservada = reservaPesquisada.getIngresso().getSessao().getId();
+                String filmeSessaoReservada = reservaPesquisada.getIngresso().getSessao().getFilme().getNome();
+                String nomeClienteReservou = reservaPesquisada.getClienteRegistrado().getNome();
+                String documentoClienteReservou = reservaPesquisada.getClienteRegistrado().getDocumento();
 
-        System.out.println("Deseja remover a reserva do sistema?");
-        System.out.println("1 - Sim");
-        System.out.println("2 - Não");
-        int opcaoRemover = Integer.parseInt(scanner.nextLine());
+                System.out.printf("Sessão: %d" + "Filme: %s" + "Cliente: %s" + "Documento: %s",
+                        idSessaoReservada, filmeSessaoReservada, nomeClienteReservou, documentoClienteReservou);
 
-        if(opcaoRemover == 1)
-            mapaReservas.remove(idReserva);
+                Ingresso ingresso = reservaPesquisada.getIngresso();
+                ingresso.imprimirIngresso();
 
+                System.out.println("Deseja remover a reserva do sistema?");
+                System.out.println("1 - Sim");
+                System.out.println("2 - Não");
+                int opcaoRemover = Integer.parseInt(scanner.nextLine());
+
+                if (opcaoRemover == 1)
+                    mapaReservas.remove(idReserva);
+            } catch (NullPointerException e) {
+                System.out.println("Reserva inválida!");
+                reservaValida = false;
+            }
+        } while(!reservaValida);
     }
 
     private static void venderIngresso(Vendedor vendedor) {
 
         Scanner scanner = new Scanner(System.in);
+
         for (Map.Entry<Integer, Sessao> entry : mapaSessoes.entrySet()) {
             System.out.printf("%d - ", entry.getKey());
             entry.getValue().imprimirFilmeDiaHorarioSessao();
@@ -708,7 +757,6 @@ public class MainCinema{
             String senhaPesquisada = scanner.nextLine();
 
             // Pesquisa no HashMap de Clientes pelo email pesquisado.
-            // TODO: Exception (NULL)
             if ((mapaClientes.get(emailPesquisado) != null)) {
                 clientePesquisado = mapaClientes.get(emailPesquisado);
 

@@ -1,11 +1,8 @@
 package br.edu.ifnmg.cinema.entidade;
 
-import java.util.Date;
-
 public class Reserva extends Venda{
 
     private final String id;
-    private Date dataHora;
     private final ClienteRegistrado clienteRegistrado;
     private int totalReservas = 0;
 

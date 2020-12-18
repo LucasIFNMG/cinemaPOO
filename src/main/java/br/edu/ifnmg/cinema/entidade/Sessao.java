@@ -2,6 +2,7 @@ package br.edu.ifnmg.cinema.entidade;
 
 import java.text.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static br.edu.ifnmg.cinema.entidade.SalaCinema.ASSENTO_DISPONIVEL;
 
@@ -37,9 +38,13 @@ public class Sessao{
         this.sala = sala;
         this.dia = dia;
         this.horario = horario;
-        totalSessoes++;
+        this.incrementarNumeroSessoes();
         this.id = totalSessoes;
 
+    }
+
+    private void incrementarNumeroSessoes() {
+        totalSessoes++;
     }
 
     public int getId() {
@@ -72,36 +77,6 @@ public class Sessao{
         return horario;
     }
 
-    public boolean reservarAssentos(int quantidade, int numeroAssento)
-    {
-        ArrayList<Integer> listaAssentos;
-        listaAssentos = getSala().getListaAssentos();
-        listaAssentos.ensureCapacity(getSala().getCapacidadeAssentos());
-
-        boolean reservouSucesso = false;
-
-        if(this.getAssentosDisponiveis() >= quantidade)
-        {
-            if (getSala().getStatusAssento(numeroAssento) == ASSENTO_DISPONIVEL) {
-                System.out.println("Assento disponível! Foi reservado!");
-                reservouSucesso = true;
-            }
-            else{
-                System.out.println("Assento já está reservado!");
-            }
-
-        }
-        else if (quantidade > listaAssentos.size() - 1){
-            System.out.printf("Capacidade insuficiente! %d < %d", listaAssentos.size() - 1, quantidade);
-        }
-
-        return reservouSucesso;
-    }
-
-    private int getAssentosDisponiveis() {
-        return this.getSala().getCapacidadeAssentos();
-    }
-
     public double getPreco() {
 
         if (this.getDia() == SEGUNDA_FEIRA ||
@@ -123,24 +98,6 @@ public class Sessao{
             }
         }
 
-    }
-
-    // Dados Filme + Sessão
-    public void recuperarDadosFilmeSessao()   
-    {
-        this.filme.recuperarDados();
-        this.imprimirDadosSessao();
-    }
-
-    public void imprimirDadosSessao()
-    {
-        System.out.println("Filme: " +this.filme.getNome()
-                        + "\nExibição: " + this.getExibicao()
-                        + "\nDimensão: " + this.getDimensao() 
-                        + "\nDia: " + this.getDia()
-                        + "\nHorário: " + this.getHorario()
-                        + "\nPreço: " + this.getPreco()
-                        + "\nSala: " + this.sala.getNumeroSala() );
     }
 
     public void imprimirFilmeDiaHorarioSessao(){

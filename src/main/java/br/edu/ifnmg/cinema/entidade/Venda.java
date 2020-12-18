@@ -13,8 +13,6 @@ public class Venda {
 
         double valorVenda = this.getIngresso().getPreco();
         this.getVendedor().incrementarTotalVendidoFuncionario(valorVenda);
-
-        this.getVendedor().incrementarNumeroVendasFuncionario();
         numeroVendasCinema++;
     }
 

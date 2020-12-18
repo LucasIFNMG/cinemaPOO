@@ -1,8 +1,6 @@
 package br.edu.ifnmg.cinema.entidade;
 
-import java.util.ArrayList;
-
-public abstract class Cliente{
+public class Cliente{
     protected String nome;
     protected String documento;
     protected int idade;
@@ -15,15 +13,10 @@ public abstract class Cliente{
         this.idade = idade;
     }
 
+    public Cliente(){};
+
     public String getNome() {
         return nome;
     }
-
-    public void visualizarSessoes(){
-
-        ArrayList<Sessao> listaSessoes = new ArrayList<>();
-        // TODO: Recuperar as sessões cadastradas (PLANILHA)
-    }
-
 
 }

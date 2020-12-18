@@ -6,7 +6,7 @@ public class SalaCinema{
 
     private final int numeroSala;
     private final int capacidadeAssentos;
-    private ArrayList<Integer> listaAssentos = new ArrayList<>();
+    private final ArrayList<Integer> listaAssentos = new ArrayList<>();
 
     static final int ASSENTO_DISPONIVEL = 0;
     static final int ASSENTO_OCUPADO = 1;
@@ -19,14 +19,6 @@ public class SalaCinema{
         setTodosAssentosDisponiveis();
     }
 
-    public ArrayList<Integer> getListaAssentos(){
-        return this.listaAssentos;
-    }
-
-    public int getNumeroSala() {
-        return this.numeroSala;
-    }
-
     public void setTodosAssentosDisponiveis() {
 
         for (int i = 0; i < this.capacidadeAssentos; i++){
@@ -34,24 +26,18 @@ public class SalaCinema{
         }
     }
 
-    public int getCapacidadeAssentos() {
-        return capacidadeAssentos;
-    }
-
     public int getStatusAssento(int numeroAssento){
         return listaAssentos.get(numeroAssento);
     }
 
-    public boolean reservarAssento(int numeroAssento){
-
-        boolean reservouSucesso = false;
+    public void reservarAssento(int numeroAssento){
 
         if (getStatusAssento(numeroAssento) == ASSENTO_DISPONIVEL){
             listaAssentos.set(numeroAssento, ASSENTO_OCUPADO);
-            reservouSucesso = true;
         }
-
-        return reservouSucesso;
+        else {
+            throw new IllegalArgumentException();
+        }
     }
 
     public boolean isSalaLotada(){
@@ -76,5 +62,13 @@ public class SalaCinema{
         }
 
         System.out.println();
+    }
+
+    public void verificarAssento(int opcaoAssento) {
+        if (opcaoAssento < 0 || opcaoAssento > this.capacidadeAssentos){
+            throw new IllegalArgumentException();
+        } else{
+            reservarAssento(opcaoAssento);
+        }
     }
 }
