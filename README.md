@@ -16,4 +16,4 @@ Os gerentes deverão ter acesso especial, com permissão de criação e edição
 
 # Instruções para Compilar e Executar o programa:
 1) Clone o repositório.
-2) Execute o arquivo MainCinema (Diretório: src > main > java ... cinema > MainCinema) através de uma IDE
+2) Execute o arquivo MainCinema (Diretório: src > main > java ... cinema > MainCinema) através de uma IDE.
